@@ -25,7 +25,7 @@ SECRET_KEY = 'django-insecure-#gbe5@5y0+1z8#l=vzoq%)34f&ajhg%*yiiie)6w#=75_at7_n
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = ['bddoc24.com', '127.0.0.1']
+ALLOWED_HOSTS = ['localhost', '127.0.0.1']
 CSRF_TRUSTED_ORIGINS = ['https://bddoc24.com']
 
 
