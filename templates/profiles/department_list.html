@@ -1,0 +1,156 @@
+{% extends 'base_new.html' %}
+{% load static %}
+{% load humanize %}
+
+{% block seo_head %}
+<title>All Medical Departments in Bangladesh — BdDoc24</title>
+<meta name='robots' content='index, follow, max-image-preview:large, max-snippet:-1, max-video-preview:-1' />
+<meta name="description" content="Search by medical department in Bangladesh. Find top doctors in cardiology, orthopedics, neurology, pediatrics, gynecology, and more — free directory." />
+
+<meta property="og:title" content="All Departments — BdDoc24" />
+<meta property="og:description" content="Browse all medical departments and specialties across Bangladesh on BdDoc24." />
+<meta property="og:url" content="https://bddoc24.com/departments/" />
+<meta property="og:type" content="website" />
+<meta property="og:image" content="https://bddoc24.com{% static 'images/bddoc24-og-image.jpg' %}" />
+<meta property="og:image:width" content="1200" />
+<meta property="og:image:height" content="630" />
+<meta property="og:image:alt" content="All Departments — BdDoc24" />
+<meta property="og:image:type" content="image/jpg" />
+
+<meta name="twitter:title" content="All Departments — BdDoc24" />
+<meta name="twitter:description" content="Browse all medical departments across Bangladesh on BdDoc24." />
+<meta name="twitter:image" content="https://bddoc24.com{% static 'images/bddoc24-og-image.jpg' %}" />
+<link rel="canonical" href="https://bddoc24.com/departments/" />
+{% endblock seo_head %}
+
+{% block content %}
+<main class="flex-grow pt-16">
+  <section class="py-12 bg-bg">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div class="flex flex-col sm:flex-row sm:items-end sm:justify-between gap-2 mb-8">
+        <div>
+          <h1 class="font-display font-bold text-3xl sm:text-4xl text-fg">All Departments</h1>
+          <p class="text-muted text-lg">{{ total_departments|intcomma }} departments found</p>
+        </div>
+        <div class="flex items-center gap-2">
+          <label for="sort-select" class="text-sm text-muted whitespace-nowrap">Sort by:</label>
+          <select id="sort-select" name="sort" class="px-3 py-2 rounded-lg bg-white shadow-sm text-fg text-sm appearance-none cursor-pointer focus:outline-none focus:ring-2 focus:ring-accent/30">
+            <option value="">Name A-Z</option>
+            <option value="doctors" {% if sort == 'doctors' %}selected{% endif %}>Most Doctors</option>
+            <option value="rating" {% if sort == 'rating' %}selected{% endif %}>Highest Rated</option>
+          </select>
+        </div>
+      </div>
+
+      <!-- Top Departments (featured cards) -->
+      {% if top_departments %}
+      <div class="mb-8">
+        <h2 class="font-display font-bold text-xl text-fg mb-4 flex items-center gap-2">
+          <i class="fas fa-star text-accent"></i>
+          Top Departments
+        </h2>
+        <div class="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-6 gap-3">
+          {% for dept in top_departments %}
+          <a href="{% url 'department_detail' dept.slug %}"
+             class="bg-white rounded-xl p-4 shadow-sm border border-slate-100 hover:border-accent hover:shadow-md transition-all group text-center">
+            <div class="w-10 h-10 mx-auto mb-2 rounded-xl bg-gradient-to-br from-accent/10 to-accent/20 flex items-center justify-center group-hover:from-accent group-hover:to-cyan-600 transition-all">
+              <i class="fas fa-stethoscope text-accent group-hover:text-white transition-colors"></i>
+            </div>
+            <span class="font-semibold text-fg text-sm group-hover:text-accent transition-colors">{{ dept.name }}</span>
+            <p class="text-xs text-muted mt-1">{{ dept.doctor_count }} doctor{{ dept.doctor_count|pluralize }}</p>
+          </a>
+          {% endfor %}
+        </div>
+      </div>
+      {% endif %}
+
+      <!-- Search -->
+      <form method="get" class="flex flex-wrap sm:flex-nowrap gap-2 sm:gap-3 mb-6 sm:mb-8 bg-card p-3 sm:p-4 rounded-xl shadow-sm items-center">
+        <div class="flex-1 min-w-[200px] w-full sm:w-auto relative">
+          <label for="dept-name-search" class="sr-only">Search department by name</label>
+          <input id="dept-name-search" type="text" name="name" value="{{ name_query }}" placeholder="Search department" class="w-full pl-10 pr-4 py-2.5 rounded-lg bg-white shadow-sm text-fg placeholder:text-muted focus:outline-none focus:ring-2 focus:ring-accent/30 text-base">
+          <svg class="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-muted" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"/></svg>
+        </div>
+        <div class="flex gap-2 w-full sm:w-auto">
+          <button type="submit" class="flex-1 sm:flex-none px-4 sm:px-5 py-2.5 bg-accent text-white font-semibold rounded-lg hover:opacity-90 transition-all btn-touch">
+            <i class="fas fa-search text-xs"></i> Filter
+          </button>
+          {% if name_query %}
+          <a href="{% url 'department_list' %}" class="flex-1 sm:flex-none px-4 sm:px-5 py-2.5 bg-white shadow-sm text-fg font-semibold rounded-lg hover:bg-gray-50 transition-all btn-touch text-center text-sm">
+            Clear
+          </a>
+          {% endif %}
+        </div>
+      </form>
+
+      <!-- Department Cards -->
+      <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 sm:gap-6">
+        {% for dept in departments %}
+        <div class="bg-card rounded-2xl overflow-hidden shadow-sm card-hover group flex flex-col border border-slate-100">
+          <div class="p-5 flex-1 flex flex-col">
+            <div class="flex items-start gap-3 mb-3">
+              <div class="w-12 h-12 rounded-xl bg-gradient-to-br from-accent/10 to-accent/20 flex items-center justify-center flex-shrink-0 group-hover:from-accent group-hover:to-cyan-600 transition-all">
+                <i class="fas fa-stethoscope text-xl text-accent group-hover:text-white transition-colors"></i>
+              </div>
+              <div>
+                <h2 class="font-display font-bold text-lg text-fg group-hover:text-accent transition-colors">{{ dept.name }}</h2>
+                {% if dept.description %}
+                <p class="text-muted text-sm line-clamp-2 mt-0.5">{{ dept.description|truncatechars:80 }}</p>
+                {% endif %}
+              </div>
+            </div>
+
+            <div class="flex flex-wrap items-center gap-3 mt-2 text-sm text-muted">
+              {% if dept.doctor_count %}
+              <span class="flex items-center gap-1.5">
+                <i class="fas fa-user-md text-xs text-accent"></i>
+                {{ dept.doctor_count }} doctor{{ dept.doctor_count|pluralize }}
+              </span>
+              {% endif %}
+              {% if dept.specialty_count %}
+              <span class="flex items-center gap-1.5">
+                <i class="fas fa-tags text-xs text-accent"></i>
+                {{ dept.specialty_count }} specialt{{ dept.specialty_count|pluralize:"y,ies" }}
+              </span>
+              {% endif %}
+              {% if dept.avg_rating %}
+              <span class="flex items-center gap-1.5">
+                <i class="fas fa-star text-xs text-amber-400"></i>
+                {{ dept.avg_rating|floatformat:1 }}
+                {% if dept.review_count %}({{ dept.review_count }}){% endif %}
+              </span>
+              {% endif %}
+            </div>
+
+            <div class="mt-auto pt-4">
+              <a href="{% url 'department_detail' dept.slug %}" aria-label="View doctors in {{ dept.name }}" class="w-full py-3 bg-gradient-to-r from-slate-900 to-slate-700 text-white font-bold rounded-xl border-2 border-slate-600 hover:from-slate-800 hover:to-slate-600 hover:border-slate-500 transition-all shadow-lg shadow-slate-900/20 flex items-center justify-center gap-2 btn-touch text-sm group/btn">
+                <span>View Doctors</span>
+                <i class="fas fa-arrow-right text-xs group-hover/btn:translate-x-1 transition-transform"></i>
+              </a>
+            </div>
+          </div>
+        </div>
+        {% empty %}
+        <div class="col-span-full text-center py-16">
+          <div class="w-20 h-20 mx-auto mb-4 rounded-full bg-slate-100 flex items-center justify-center">
+            <i class="fas fa-stethoscope text-3xl text-slate-400"></i>
+          </div>
+          <p class="text-muted text-lg mb-2">No departments found</p>
+          <p class="text-sm text-slate-400 mb-4">Try adjusting your search terms</p>
+          <a href="{% url 'department_list' %}" class="inline-block px-6 py-2.5 bg-accent text-white font-semibold rounded-lg hover:opacity-90 transition-all">Clear Search</a>
+        </div>
+        {% endfor %}
+      </div>
+    </div>
+  </section>
+</main>
+
+<script>
+document.getElementById('sort-select')?.addEventListener('change', function() {
+  var url = new URL(window.location.href);
+  if (this.value) { url.searchParams.set('sort', this.value); }
+  else { url.searchParams.delete('sort'); }
+  window.location.href = url.toString();
+});
+</script>
+{% endblock content %}

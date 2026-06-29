@@ -1,0 +1,262 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en" class="scroll-smooth">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, user-scalable=yes">
+
+  {% block seo_head %}
+  <title>BdDoc24 - Find Doctors & Hospitals in Bangladesh</title>
+  {% endblock seo_head %}
+
+  <!-- Global SEO Defaults -->
+  <meta property="og:site_name" content="BdDoc24">
+  <meta property="og:locale" content="en_US">
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="author" content="BdDoc24">
+  <meta name="last-modified" content="{% now 'Y-m-d' %}">
+
+  <!-- Theme Color -->
+  <meta name="theme-color" content="#0f172a">
+  <meta name="color-scheme" content="dark light">
+
+  <!-- Favicon (using existing logo) -->
+  <link rel="icon" type="image/png" sizes="32x32" href="{% static 'images/logo.png' %}">
+
+  <!-- Google & Bing Verification -->
+  <meta name="google-site-verification" content="fziraiaqSdUGpWbRO5h0v6C6E-Rbv22uG_iBDHGOvQc" />
+  <meta name="msvalidate.01" content="EAB04B17341B90952E31740B7781BD47" />
+
+  <!-- Preconnect to CDNs -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link rel="preconnect" href="https://cdnjs.cloudflare.com" crossorigin>
+
+  <!-- Preload critical CSS -->
+  <link rel="preload" href="{% static 'css/styles.css' %}?v=2" as="style">
+  <link rel="stylesheet" href="{% static 'css/styles.css' %}?v=2">
+
+  <!-- Async Font Awesome (non-blocking) -->
+  <link rel="preload" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" as="style" onload="this.rel='stylesheet'">
+  <noscript><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css"></noscript>
+
+  <!-- Fonts -->
+  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Space+Grotesk:wght@400;500;600;700&display=swap" rel="stylesheet">
+
+</head>
+<body class="min-h-screen flex flex-col bg-slate-50 text-slate-900 font-body">
+
+  <!-- Navigation -->
+  <nav class="fixed top-0 left-0 right-0 z-50 bg-primary/95 backdrop-blur-xl border-b border-white/10 shadow-lg">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div class="flex items-center justify-between h-18 py-3">
+        
+        <!-- Logo -->
+        <a href="/" class="flex items-center gap-3 group">
+          <div class="w-11 h-11 rounded-xl bg-gradient-to-br from-accent to-cyan-600 flex items-center justify-center shadow-lg shadow-accent/30 group-hover:scale-110 transition-transform">
+            <svg viewBox="0 0 128 128" class="w-7 h-7 text-white" fill="none" xmlns="http://www.w3.org/2000/svg">
+              <path d="M64 20c-24.3 0-44 19.7-44 44s19.7 44 44 44 44-19.7 44-44-19.7-44-44-44zm0 8c19.9 0 36 16.1 36 36s-16.1 36-36 36-36-16.1-36-36 16.1-36 36-36z" fill="currentColor" opacity="0.3"/>
+              <circle cx="64" cy="64" r="20" stroke="currentColor" stroke-width="6" fill="none"/>
+              <path d="M64 44v20l12 8" stroke="currentColor" stroke-width="6" stroke-linecap="round" fill="none"/>
+            </svg>
+          </div>
+          <span class="font-display font-bold text-2xl text-white tracking-tight">BdDoc<span class="text-accent">24</span></span>
+        </a>
+
+        <!-- Desktop Nav -->
+        <div class="hidden md:flex items-center gap-1">
+          <a href="{% url 'doctor_list' %}" class="nav-link px-4 py-2 text-slate-200 hover:text-white font-medium transition-colors rounded-lg hover:bg-white/5">Doctors</a>
+          <a href="{% url 'hospital_list' %}" class="nav-link px-4 py-2 text-slate-200 hover:text-white font-medium transition-colors rounded-lg hover:bg-white/5">Hospitals</a>
+          <a href="{% url 'department_list' %}" class="nav-link px-4 py-2 text-slate-200 hover:text-white font-medium transition-colors rounded-lg hover:bg-white/5">Departments</a>
+          <a href="{% url 'about_us' %}" class="nav-link px-4 py-2 text-white font-semibold transition-colors rounded-lg hover:bg-white/5">About</a>
+          <a href="{% url 'contact_us' %}" class="nav-link px-4 py-2 text-white font-semibold transition-colors rounded-lg hover:bg-white/5">Contact</a>
+        </div>
+
+        <!-- Actions -->
+        <div class="flex items-center gap-3">
+          <a href="{% url 'contact_us' %}" class="hidden lg:inline-flex px-5 py-2.5 bg-gradient-to-r from-accent to-cyan-600 text-white font-semibold rounded-xl hover:shadow-lg hover:shadow-accent/30 transition-all hover:-translate-y-0.5">
+            List Your Practice
+          </a>
+          <!-- Mobile Menu Button -->
+          <button id="mobileMenuBtn" class="md:hidden p-3 rounded-xl bg-white/10 hover:bg-white/20 text-white transition-colors btn-touch flex items-center justify-center" aria-label="Open menu" aria-expanded="false" aria-controls="mobileMenu">
+            <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"/></svg>
+          </button>
+        </div>
+      </div>
+    </div>
+
+    <!-- Mobile Menu Panel -->
+    <div id="mobileMenu" class="hidden md:hidden bg-primary border-t border-white/10 absolute w-full shadow-2xl" role="navigation" aria-label="Mobile navigation">
+      <div class="px-4 py-4 space-y-1">
+        <a href="{% url 'doctor_list' %}" class="flex items-center gap-3 py-4 px-4 text-slate-200 hover:bg-white/10 hover:text-white rounded-xl transition-colors btn-touch">
+          <i class="fas fa-user-md w-5 text-center"></i> Doctors
+        </a>
+        <a href="{% url 'hospital_list' %}" class="flex items-center gap-3 py-4 px-4 text-slate-200 hover:bg-white/10 hover:text-white rounded-xl transition-colors btn-touch">
+          <i class="fas fa-hospital w-5 text-center"></i> Hospitals
+        </a>
+        <a href="{% url 'department_list' %}" class="flex items-center gap-3 py-4 px-4 text-slate-200 hover:bg-white/10 hover:text-white rounded-xl transition-colors btn-touch">
+          <i class="fas fa-building w-5 text-center"></i> Departments
+        </a>
+        <a href="{% url 'hospital_list' %}" class="flex items-center gap-3 py-4 px-4 text-slate-200 hover:bg-white/10 hover:text-white rounded-xl transition-colors btn-touch">
+          <i class="fas fa-trophy w-5 text-center"></i> Top Hospitals
+        </a>
+        <a href="{% url 'doctor_list' %}" class="flex items-center gap-3 py-4 px-4 text-slate-200 hover:bg-white/10 hover:text-white rounded-xl transition-colors btn-touch">
+          <i class="fas fa-star w-5 text-center"></i> Top Doctors
+        </a>
+        <a href="{% url 'about_us' %}" class="flex items-center gap-3 py-4 px-4 text-white font-semibold bg-white/10 rounded-xl btn-touch">About</a>
+        <a href="{% url 'contact_us' %}" class="flex items-center gap-3 py-4 px-4 text-white font-semibold bg-white/10 rounded-xl btn-touch">Contact</a>
+        <a href="{% url 'contact_us' %}" class="flex items-center justify-center gap-2 w-full mt-4 px-4 py-4 bg-gradient-to-r from-accent to-cyan-600 text-white font-semibold rounded-xl hover:shadow-lg transition-all btn-touch">
+          <i class="fas fa-plus"></i> List Your Practice
+        </a>
+      </div>
+    </div>
+  </nav>
+
+  <!-- Main Content -->
+  <main class="flex-grow pt-16">
+  {% block content %}
+
+  {% endblock content %}
+  </main>
+
+  <!-- Disclaimer Banner -->
+  <section class="bg-amber-50 border-t border-amber-100 py-3">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
+      <p class="text-sm text-amber-800">
+        <i class="fas fa-info-circle mr-2"></i>
+        BdDoc24 is a healthcare directory platform and does not provide medical advice, diagnosis, or treatment. Always consult a qualified healthcare provider.
+      </p>
+    </div>
+  </section>
+
+  <!-- Footer -->
+  <footer class="bg-primary text-white relative overflow-hidden">
+    <!-- Decorative Background -->
+    <div class="absolute inset-0 bg-[url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg fill='%23ffffff' fill-opacity='0.03'%3E%3Cpath d='M36 34v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zm0-30V0h-2v4h-4v2h4v4h2V6h4V4h-4zM6 34v-4H4v4H0v2h4v4h2v-4h4v-2H6zM6 4V0H4v4H0v2h4v4h2V6h4V4H6z'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E")]"></div>
+    
+    <div class="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12 lg:py-16">
+      <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8 lg:gap-10 mb-10 lg:mb-12">
+        <!-- Brand -->
+        <div class="lg:col-span-1">
+          <a href="/" class="flex items-center gap-3 mb-4 lg:mb-6 group">
+            <div class="w-10 h-10 lg:w-12 lg:h-12 rounded-xl bg-gradient-to-br from-accent to-cyan-600 flex items-center justify-center shadow-lg shadow-accent/30 group-hover:scale-110 transition-transform">
+              <svg viewBox="0 0 128 128" class="w-6 h-6 lg:w-8 lg:h-8 text-white" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <path d="M64 20c-24.3 0-44 19.7-44 44s19.7 44 44 44 44-19.7 44-44-19.7-44-44-44zm0 8c19.9 0 36 16.1 36 36s-16.1 36-36 36-36-16.1-36-36 16.1-36 36-36z" fill="currentColor" opacity="0.3"/>
+                <circle cx="64" cy="64" r="20" stroke="currentColor" stroke-width="6" fill="none"/>
+                <path d="M64 44v20l12 8" stroke="currentColor" stroke-width="6" stroke-linecap="round" fill="none"/>
+              </svg>
+            </div>
+            <span class="font-display font-bold text-xl lg:text-2xl text-white">BdDoc<span class="text-accent">24</span></span>
+          </a>
+          <p class="text-slate-300 text-sm leading-relaxed mb-6">
+            Your trusted healthcare directory connecting patients with qualified doctors and hospitals across Bangladesh.
+          </p>
+          <!-- Social Links -->
+          <div class="flex gap-2 lg:gap-3">
+            <a href="#" aria-label="Facebook" class="w-9 h-9 lg:w-10 lg:h-10 rounded-xl bg-white/10 flex items-center justify-center text-white hover:bg-accent hover:text-slate-900 transition-all hover:-translate-y-1 btn-touch">
+              <i class="fab fa-facebook-f"></i>
+            </a>
+            <a href="#" aria-label="Twitter" class="w-9 h-9 lg:w-10 lg:h-10 rounded-xl bg-white/10 flex items-center justify-center text-white hover:bg-accent hover:text-slate-900 transition-all hover:-translate-y-1 btn-touch">
+              <i class="fab fa-twitter"></i>
+            </a>
+            <a href="#" aria-label="Instagram" class="w-9 h-9 lg:w-10 lg:h-10 rounded-xl bg-white/10 flex items-center justify-center text-white hover:bg-accent hover:text-slate-900 transition-all hover:-translate-y-1 btn-touch">
+              <i class="fab fa-instagram"></i>
+            </a>
+            <a href="#" aria-label="LinkedIn" class="w-9 h-9 lg:w-10 lg:h-10 rounded-xl bg-white/10 flex items-center justify-center text-white hover:bg-accent hover:text-slate-900 transition-all hover:-translate-y-1 btn-touch">
+              <i class="fab fa-linkedin-in"></i>
+            </a>
+          </div>
+        </div>
+        
+        <!-- For Patients -->
+        <div>
+          <h4 class="font-display font-semibold text-lg text-white mb-5">For Patients</h4>
+          <ul class="space-y-3">
+            <li><a href="{% url 'doctor_list' %}" class="footer-link text-slate-400 hover:text-accent transition-colors text-sm">Find a Doctor</a></li>
+            <li><a href="{% url 'hospital_list' %}" class="footer-link text-slate-400 hover:text-accent transition-colors text-sm">Find a Hospital</a></li>
+            <li><a href="{% url 'doctor_list' %}" class="footer-link text-slate-400 hover:text-accent transition-colors text-sm">Specialties</a></li>
+            <li><a href="{% url 'hospital_list' %}" class="footer-link text-slate-400 hover:text-accent transition-colors text-sm">Top Hospitals</a></li>
+          </ul>
+        </div>
+        
+        <!-- Legal Policies -->
+        <div>
+          <h4 class="font-display font-semibold text-lg text-white mb-5">Legal & Policies</h4>
+          <ul class="space-y-3">
+            <li><a href="{% url 'privacy_policy' %}" class="footer-link text-slate-400 hover:text-accent transition-colors text-sm">Privacy Policy</a></li>
+            <li><a href="{% url 'editorial_policy' %}" class="footer-link text-slate-400 hover:text-accent transition-colors text-sm">Editorial Policy</a></li>
+            <li><a href="{% url 'verification_policy' %}" class="footer-link text-slate-400 hover:text-accent transition-colors text-sm">Verification Policy</a></li>
+            <li><a href="{% url 'terms_of_service' %}" class="footer-link text-slate-400 hover:text-accent transition-colors text-sm">Terms of Service</a></li>
+          </ul>
+        </div>
+        
+        <!-- Contact Info -->
+        <div>
+          <h4 class="font-display font-semibold text-lg text-white mb-5">Contact Us</h4>
+          <ul class="space-y-3 text-sm text-slate-400">
+            <li class="flex items-start gap-3">
+              <i class="fas fa-map-marker-alt mt-1 text-accent"></i>
+              <span>Dhaka, Bangladesh</span>
+            </li>
+            <li class="flex items-center gap-3">
+              <i class="fas fa-envelope text-accent"></i>
+              <span>info@bddoc24.com</span>
+            </li>
+            <li class="flex items-center gap-3">
+              <i class="fas fa-phone text-accent"></i>
+              <span>+880 01790 007709</span>
+            </li>
+          </ul>
+        </div>
+      </div>
+      
+      <!-- Bottom Bar -->
+      <div class="border-t border-white/10 pt-8 flex flex-col sm:flex-row justify-between items-center gap-4">
+        <p class="text-slate-500 text-sm">© {% now 'Y' %} BdDoc24. All rights reserved. Updated: {% now 'M Y' %}.</p>
+        <div class="flex items-center gap-2 text-sm text-slate-500">
+          <span>Made with</span>
+          <i class="fas fa-heart text-accent"></i>
+          <span>for Bangladesh</span>
+        </div>
+      </div>
+    </div>
+  </footer>
+
+  <!-- JavaScript Logic -->
+  <script>
+    // Mobile Menu Toggle
+    const mobileMenuBtn = document.getElementById('mobileMenuBtn');
+    const mobileMenu = document.getElementById('mobileMenu');
+
+    if(mobileMenuBtn && mobileMenu) {
+      mobileMenuBtn.addEventListener('click', (e) => {
+        e.stopPropagation();
+        const isOpen = !mobileMenu.classList.contains('hidden');
+        mobileMenu.classList.toggle('hidden');
+        mobileMenuBtn.setAttribute('aria-expanded', !isOpen);
+        mobileMenuBtn.setAttribute('aria-label', isOpen ? 'Open menu' : 'Close menu');
+      });
+
+      // Close menu when clicking outside
+      document.addEventListener('click', (e) => {
+        if (!mobileMenu.contains(e.target) && !mobileMenuBtn.contains(e.target)) {
+          mobileMenu.classList.add('hidden');
+          mobileMenuBtn.setAttribute('aria-expanded', 'false');
+          mobileMenuBtn.setAttribute('aria-label', 'Open menu');
+        }
+      });
+
+      // Close menu on escape key
+      document.addEventListener('keydown', (e) => {
+        if (e.key === 'Escape' && !mobileMenu.classList.contains('hidden')) {
+          mobileMenu.classList.add('hidden');
+          mobileMenuBtn.setAttribute('aria-expanded', 'false');
+          mobileMenuBtn.setAttribute('aria-label', 'Open menu');
+        }
+      });
+    }
+  </script>
+  {% block extra_js %}{% endblock extra_js %}
+
+</body>
+</html>

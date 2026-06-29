@@ -1,0 +1,400 @@
+{% extends "base_new.html" %}
+{% load static %}
+
+{% block seo_head %}
+<title>{{ doctor.name }} — {{ doctor.designation }} in {{ doctor.location.name|default:'Bangladesh' }} | BdDoc24</title>
+<meta name='robots' content='index, follow, max-image-preview:large, max-snippet:-1, max-video-preview:-1' />
+<meta name="description" content="Looking for Dr. {{ doctor.name }}? {{ doctor.designation }} with {{ doctor.experience_years|default:'extensive' }} years of experience at {{ doctor.hospital.name|default:'various hospitals' }}. View qualifications, contact info, and patient reviews." />
+
+<meta property="og:title" content="{{ doctor.name }} - {{ doctor.designation }} | BdDoc24" />
+<meta property="og:description" content="{{ doctor.name }} - {{ doctor.designation }}. Find verified doctor profile with contact information on BdDoc24." />
+<meta property="og:url" content="https://bddoc24.com{{ doctor.get_absolute_url }}" />
+<meta property="og:type" content="article" />
+<meta property="og:image" content="https://bddoc24.com{{ doctor.get_profile_picture_url }}" />
+<meta property="og:image:width" content="400" />
+<meta property="og:image:height" content="400" />
+<meta property="og:image:alt" content="{{ doctor.name }} - {{ doctor.designation }}" />
+<meta property="og:image:type" content="image/jpg" />
+
+<meta name="twitter:title" content="{{ doctor.name }} - {{ doctor.designation }} | BdDoc24" />
+<meta name="twitter:description" content="{{ doctor.name }} - {{ doctor.designation }}. Find verified doctor profile on BdDoc24." />
+<meta name="twitter:image" content="https://bddoc24.com{{ doctor.get_profile_picture_url }}" />
+<link rel="canonical" href="https://bddoc24.com{{ doctor.get_absolute_url }}" />
+
+{% endblock seo_head %}
+
+{% block content %}
+<main class="flex-grow pt-2">
+  <!-- Hero Section -->
+  <section class="py-8 sm:py-12 bg-gradient-to-br from-secondary via-primary to-slate-800 relative overflow-hidden">
+    <!-- Background Pattern -->
+    <div class="absolute inset-0 bg-[url('data:image/svg+xml,%3Csvg width=\"60\" height=\"60\" viewBox=\"0 0 60 60\" xmlns=\"http://www.w3.org/2000/svg\"%3E%3Cg fill=\"none\" fill-rule=\"evenodd\"%3E%3Cg fill=\"%23ffffff\" fill-opacity=\"0.03\"%3E%3Cpath d=\"M36 34v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zm0-30V0h-2v4h-4v2h4v4h2V6h4V4h-4zM6 34v-4H4v4H0v2h4v4h2v-4h4v-2H6zM6 4V0H4v4H0v2h4v4h2V6h4V4H6z\"/%3E%3C/g%3E%3C/g%3E%3C/svg%3E')]"></div>
+    
+    <!-- Glossy glass overlay -->
+    <div class="absolute top-0 left-0 right-0 h-48 sm:h-64 bg-gradient-to-b from-white/[0.08] to-transparent backdrop-blur-[2px] pointer-events-none"></div>
+    
+    <div class="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div class="bg-white/10 backdrop-blur-sm rounded-2xl p-8 border border-white/10">
+        <div class="flex flex-col lg:flex-row items-center lg:items-start gap-8">
+          <!-- Doctor Photo -->
+          <div class="flex-shrink-0">
+            <img loading="lazy"               src="{{ doctor.get_profile_picture_url }}"
+              alt="{{ doctor.name }}"
+              class="w-40 h-40 lg:w-48 lg:h-48 rounded-2xl object-cover shadow-2xl border-4 border-white/20"
+            />
+          </div>
+
+          <!-- Doctor Info -->
+          <div class="flex-1 text-center lg:text-left">
+            <h1 class="font-display font-bold text-3xl lg:text-4xl text-white mb-2">{{ doctor.name }}</h1>
+            <p class="text-lg text-slate-300 mb-4">{{ doctor.designation }}</p>
+
+            <!-- Doctor's Speciality -->
+            <div class="flex flex-wrap justify-center lg:justify-start gap-2">
+              {% for specialty in doctor.specialties.all %}
+              <span class="px-4 py-1.5 bg-gradient-to-r from-accent to-cyan-600 text-white text-sm font-medium rounded-full">
+                {{ specialty.name }}
+              </span>
+              {% endfor %}
+            </div>
+
+            <div class="flex flex-wrap items-center justify-center lg:justify-start gap-4 mb-4 mt-5">
+              {% if doctor.hospital %}
+              <span class="flex items-center gap-2 px-4 py-2 bg-white/10 rounded-xl text-slate-200">
+                <i class="fas fa-hospital text-accent"></i>
+                {{ doctor.hospital.name }}
+              </span>
+              {% endif %}
+              {% if doctor.location %}
+              <span class="flex items-center gap-2 px-4 py-2 bg-white/10 rounded-xl text-slate-200">
+                <i class="fas fa-map-marker-alt text-accent"></i>
+                {{ doctor.location.name }}
+              </span>
+              {% endif %}
+              {% if doctor.experience_years %}
+              <span class="flex items-center gap-2 px-4 py-2 bg-white/10 rounded-xl text-slate-200">
+                <i class="fas fa-briefcase text-accent"></i>
+                {{ doctor.experience_years }}+ Years
+              </span>
+              {% endif %}
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Main Content -->
+  <section class="py-12">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div class="grid grid-cols-1 lg:grid-cols-3 gap-8">
+        
+        <!-- Left Column - Main Content -->
+        <div class="lg:col-span-2 space-y-8">
+          
+          <!-- About Section -->
+          <div class="bg-white rounded-2xl p-6 border border-slate-200 shadow-sm">
+            <h2 class="font-display font-bold text-2xl text-slate-800 mb-4 flex items-center gap-3">
+              <div class="w-10 h-10 rounded-xl bg-gradient-to-br from-accent to-cyan-600 flex items-center justify-center text-white">
+                <i class="fas fa-user"></i>
+              </div>
+              About {{ doctor.name }}
+            </h2>
+            <p class="text-slate-600 leading-relaxed">
+              {% if doctor.about %}{{ doctor.about|safe }}{% else %}No biography available.{% endif %}
+            </p>
+          </div>
+
+          <!-- Education & Qualifications -->
+          <div class="bg-white rounded-2xl p-6 border border-slate-200 shadow-sm">
+            <h2 class="font-display font-bold text-2xl text-slate-800 mb-4 flex items-center gap-3">
+              <div class="w-10 h-10 rounded-xl bg-gradient-to-br from-secondary to-blue-600 flex items-center justify-center text-white">
+                <i class="fas fa-graduation-cap"></i>
+              </div>
+              Education & Qualifications
+            </h2>
+            <div class="space-y-3">
+              <div class="flex items-start gap-3 p-4 bg-slate-50 rounded-xl">
+                <i class="fas fa-check-circle text-green-500 mt-1"></i>
+                <span class="text-slate-700 font-medium">{{ doctor.qualifications|default:"Qualifications not available" }}</span>
+              </div>
+            </div>
+          </div>
+
+          <!-- Areas of Expertise -->
+          {% if doctor.specialties.exists %}
+          <div class="bg-white rounded-2xl p-6 border border-slate-200 shadow-sm">
+            <h2 class="font-display font-bold text-2xl text-slate-800 mb-4 flex items-center gap-3">
+              <div class="w-10 h-10 rounded-xl bg-gradient-to-br from-purple-600 to-purple-700 flex items-center justify-center text-white">
+                <i class="fas fa-stethoscope"></i>
+              </div>
+              Areas of Expertise
+            </h2>
+            <div class="grid grid-cols-2 sm:grid-cols-3 gap-3">
+              {% for specialty in doctor.specialties.all %}
+              {% with dept=specialty.department.first %}
+              <a href="{% if dept.slug %}{% url 'department_detail' dept.slug %}{% else %}#{% endif %}" 
+                 class="flex items-center gap-3 p-3 bg-slate-50 rounded-xl hover:bg-accent/10 hover:border-accent border border-transparent transition-all group">
+                <div class="w-10 h-10 rounded-lg bg-purple-100 flex items-center justify-center text-purple-600 group-hover:bg-accent group-hover:text-white transition-colors">
+                  <i class="fas fa-heartbeat"></i>
+                </div>
+                <span class="font-medium text-slate-700 group-hover:text-accent transition-colors">{{ specialty.name }}</span>
+              </a>
+              {% endwith %}
+              {% endfor %}
+            </div>
+          </div>
+          {% endif %}
+
+          <!-- Contact Numbers for appointments -->
+          {% with phone_numbers=doctor.hospital.get_contact_numbers_list %}
+          {% if phone_numbers and doctor.hospital %}
+          <div class="bg-white rounded-2xl p-6 border border-slate-200 shadow-sm">
+            <h2 class="font-display font-bold text-2xl text-slate-800 mb-4 flex items-center gap-3">
+              <div class="w-10 h-10 rounded-xl bg-gradient-to-br from-secondary to-blue-600 flex items-center justify-center text-white">
+                <i class="fas fa-phone-alt"></i>
+              </div>
+              Contact for appointments
+            </h2>
+            <div class="grid grid-cols-2 sm:grid-cols-3 gap-3">
+              {% for phone in phone_numbers %}
+              <div class="flex items-center gap-3 p-3 bg-slate-50 rounded-xl border border-transparent hover:border-accent transition-all">
+                <div class="w-10 h-10 rounded-lg bg-blue-100 flex items-center justify-center text-blue-600">
+                  <i class="fas fa-phone"></i>
+                </div>
+                <span class="font-medium text-slate-700">{{ phone }}</span>
+              </div>
+              {% endfor %}
+            </div>
+          </div>
+          {% endif %}
+          {% endwith %}
+
+          <!-- Professional Experience (No Tabs - Inline) -->
+          {% if doctor.experiences.exists %}
+          <div class="bg-white rounded-2xl p-6 border border-slate-200 shadow-sm">
+            <h2 class="font-display font-bold text-2xl text-slate-800 mb-4 flex items-center gap-3">
+              <div class="w-10 h-10 rounded-xl bg-gradient-to-br from-emerald-500 to-emerald-600 flex items-center justify-center text-white">
+                <i class="fas fa-briefcase"></i>
+              </div>
+              Professional Experience
+            </h2>
+            <div class="space-y-4">
+              {% for exp in doctor.experiences.all %}
+              <div class="relative pl-8 py-4 border-l-4 border-accent/30 hover:border-accent transition-colors">
+                <div class="absolute left-0 top-4 w-4 h-4 rounded-full bg-accent -translate-x-[9px]"></div>
+                <div class="flex flex-col sm:flex-row sm:items-start sm:justify-between gap-2 mb-2">
+                  <h3 class="font-display font-semibold text-lg text-slate-800">{{ exp.position }}</h3>
+                  <span class="px-3 py-1 bg-slate-100 text-slate-600 text-sm rounded-lg whitespace-nowrap">
+                    {{ exp.start_year|default:"" }}{% if exp.start_year %}{% if exp.end_year or exp.start_year != exp.end_year %} - {% endif %}{% endif %}{% if exp.end_year %}{{ exp.end_year }}{% else %}Present{% endif %}
+                  </span>
+                </div>
+                <p class="text-slate-600 font-medium mb-2">
+                  <i class="fas fa-hospital text-accent mr-2"></i>{{ exp.hospital_name }}
+                </p>
+                {% if exp.description %}
+                <p class="text-slate-500 text-sm">{{ exp.description }}</p>
+                {% endif %}
+              </div>
+              {% endfor %}
+            </div>
+          </div>
+          {% endif %}
+
+        </div>
+
+        <!-- Right Column - Hospital Sidebar -->
+        <div class="lg:col-span-1">
+          <div class="lg:sticky lg:top-24 space-y-6">
+            
+            <!-- Hospital Info Card -->
+            {% if doctor.hospital %}
+            <div class="bg-white rounded-2xl p-6 border border-slate-200 shadow-lg">
+              <h3 class="font-display font-bold text-xl text-slate-800 mb-4 flex items-center gap-3">
+                <div class="w-10 h-10 rounded-xl bg-gradient-to-br from-secondary to-blue-600 flex items-center justify-center text-white">
+                  <i class="fas fa-hospital"></i>
+                </div>
+                Hospital Info
+              </h3>
+              
+              <div class="space-y-4">
+                <!-- Hospital Name -->
+                <div class="p-4 bg-slate-50 rounded-xl">
+                  <p class="text-sm text-slate-500 mb-1">Hospital</p>
+                  <p class="font-semibold text-slate-800">{{ doctor.hospital.name }}</p>
+                </div>
+
+                <!-- Address -->
+                {% if doctor.hospital.address %}
+                <div class="p-4 bg-slate-50 rounded-xl">
+                  <p class="text-sm text-slate-500 mb-1">Address</p>
+                  <p class="text-slate-700">{{ doctor.hospital.address }}</p>
+                  {% if doctor.hospital.location %}
+                  <p class="text-sm text-accent mt-1">{{ doctor.hospital.location.name }}</p>
+                  {% endif %}
+                </div>
+                {% endif %}
+              </div>
+            </div>
+            {% endif %}
+
+            <!-- Location Card -->
+            {% if doctor.location %}
+            <div class="bg-white rounded-2xl p-6 border border-slate-200 shadow-lg">
+              <h3 class="font-display font-bold text-xl text-slate-800 mb-4 flex items-center gap-3">
+                <div class="w-10 h-10 rounded-xl bg-gradient-to-br from-accent to-cyan-600 flex items-center justify-center text-white">
+                  <i class="fas fa-map-marker-alt"></i>
+                </div>
+                Location
+              </h3>
+              <div class="p-4 bg-slate-50 rounded-xl">
+                <p class="font-semibold text-slate-800">{{ doctor.location.name }}</p>
+              </div>
+            </div>
+            {% endif %}
+
+          </div>
+        </div>
+
+      </div>
+    </div>
+
+    <!-- Freshness Signal -->
+    {% if doctor.updated_at %}
+    <div class="max-w-6xl mx-auto mt-8 px-4">
+      <p class="text-xs text-slate-400 text-center">Profile last updated: {{ doctor.updated_at|date:"F Y" }}</p>
+    </div>
+    {% endif %}
+
+    <!-- Related Doctors Section -->
+    {% if related_doctors %}
+    <div class="mt-12 max-w-6xl mx-auto">
+      <h2 class="font-display font-bold text-2xl text-slate-800 mb-6 flex items-center gap-3">
+        <div class="w-10 h-10 rounded-xl bg-gradient-to-br from-secondary to-blue-600 flex items-center justify-center text-white">
+          <i class="fas fa-user-md"></i>
+        </div>
+        Related Doctors{% if doctor.location %} in {{ doctor.location.name }}{% endif %}
+      </h2>
+      <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
+        {% for related in related_doctors %}
+        <a href="{% url 'doctor_profile' related.slug %}" class="bg-white rounded-xl border border-slate-200 p-4 hover:border-accent hover:shadow-lg transition-all group">
+          <div class="flex items-center gap-3 mb-3">
+            <img loading="lazy" src="{{ related.get_profile_picture_url }}" alt="{{ related.name }}" class="w-14 h-14 rounded-xl object-cover">
+            <div class="min-w-0">
+              <h3 class="font-semibold text-slate-800 truncate group-hover:text-accent">{{ related.name }}</h3>
+              <p class="text-sm text-slate-500 truncate">{{ related.designation }}</p>
+            </div>
+          </div>
+          <div class="space-y-1">
+            {% if related.hospital %}
+            <p class="text-sm text-slate-600 flex items-center gap-2 truncate">
+              <i class="fas fa-hospital text-accent text-xs"></i>
+              <span class="truncate">{{ related.hospital.name }}</span>
+            </p>
+            {% endif %}
+            {% if related.location %}
+            <p class="text-sm text-slate-500 flex items-center gap-2 truncate">
+              <i class="fas fa-map-marker-alt text-accent text-xs"></i>
+              <span class="truncate">{{ related.location.name }}</span>
+            </p>
+            {% endif %}
+          </div>
+        </a>
+        {% endfor %}
+      </div>
+    </div>
+    {% endif %}
+
+    <!-- See Also -->
+    <div class="mt-12 max-w-5xl mx-auto text-center">
+      <div class="flex flex-wrap justify-center gap-3">
+        {% with first_spec=doctor.specialties.all|first %}
+        {% if first_spec %}
+        {% with dept=first_spec.department.all|first %}
+        {% if dept.slug and doctor.location.slug %}
+          <a href="{% url 'top_doctors_department_location' department=dept.slug location=doctor.location.slug %}" class="px-5 py-2.5 bg-gradient-to-r from-accent to-cyan-600 text-white font-semibold rounded-lg hover:from-cyan-600 hover:to-accent transition-all text-sm">
+            Top {{ first_spec.name }} Doctors in {{ doctor.location.name }}
+          </a>
+        {% endif %}
+        {% if dept.slug %}
+          <a href="{% url 'department_detail' dept.slug %}" class="px-5 py-2.5 border border-slate-300 text-slate-700 font-semibold rounded-lg hover:bg-gray-50 transition-all text-sm">
+            All {{ first_spec.name }} Doctors
+          </a>
+        {% endif %}
+        {% endwith %}
+        {% endif %}
+        {% endwith %}
+        {% if doctor.location %}
+          <a href="{% url 'top_hospitals_location' location=doctor.location.slug %}" class="px-5 py-2.5 border border-slate-300 text-slate-700 font-semibold rounded-lg hover:bg-gray-50 transition-all text-sm">
+            Top Hospitals in {{ doctor.location.name }}
+          </a>
+        {% endif %}
+      </div>
+    </div>
+
+    <!-- FAQ Section -->
+    <div class="mt-12 max-w-5xl mx-auto">
+      <h2 class="font-display font-bold text-2xl text-slate-800 mb-6 flex items-center gap-3">
+        <div class="w-10 h-10 rounded-xl bg-gradient-to-br from-accent to-cyan-600 flex items-center justify-center text-white">
+          <i class="fas fa-question-circle"></i>
+        </div>
+        Frequently Asked Questions about {{ doctor.name }}
+      </h2>
+      
+      <div class="space-y-3">
+        <details class="group bg-white rounded-xl border border-slate-200 overflow-hidden">
+          <summary class="flex items-center gap-3 p-4 cursor-pointer hover:bg-slate-50 transition-colors">
+            <div class="w-8 h-8 rounded-lg bg-accent/10 flex items-center justify-center text-accent flex-shrink-0">
+              <i class="fas fa-calendar-check"></i>
+            </div>
+            <span class="font-medium text-slate-800">How can I book an appointment with {{ doctor.name }}?</span>
+            <i class="fas fa-chevron-down ml-auto text-slate-400 group-open:rotate-180 transition-transform"></i>
+          </summary>
+          <div class="px-4 pb-4 pl-16 text-slate-600">
+            Contact the hospital directly using the phone numbers listed on this profile. Provide the reception with {{ doctor.name }}'s name and your preferred date and time to schedule your appointment.
+          </div>
+        </details>
+
+        <details class="group bg-white rounded-xl border border-slate-200 overflow-hidden">
+          <summary class="flex items-center gap-3 p-4 cursor-pointer hover:bg-slate-50 transition-colors">
+            <div class="w-8 h-8 rounded-lg bg-accent/10 flex items-center justify-center text-accent flex-shrink-0">
+              <i class="fas fa-graduation-cap"></i>
+            </div>
+            <span class="font-medium text-slate-800">What are the qualifications of {{ doctor.name }}?</span>
+            <i class="fas fa-chevron-down ml-auto text-slate-400 group-open:rotate-180 transition-transform"></i>
+          </summary>
+          <div class="px-4 pb-4 pl-16 text-slate-600">
+            {{ doctor.name }} holds qualifications in {{ doctor.qualifications|default:"medicine" }} and specializes in {% for spec in doctor.specialties.all %}{{ spec.name }}{% if not forloop.last %}, {% endif %}{% endfor %}. You can find the detailed qualifications in the Education section above.
+          </div>
+        </details>
+
+        <details class="group bg-white rounded-xl border border-slate-200 overflow-hidden">
+          <summary class="flex items-center gap-3 p-4 cursor-pointer hover:bg-slate-50 transition-colors">
+            <div class="w-8 h-8 rounded-lg bg-accent/10 flex items-center justify-center text-accent flex-shrink-0">
+              <i class="fas fa-map-marker-alt"></i>
+            </div>
+            <span class="font-medium text-slate-800">Where does {{ doctor.name }} practice?</span>
+            <i class="fas fa-chevron-down ml-auto text-slate-400 group-open:rotate-180 transition-transform"></i>
+          </summary>
+          <div class="px-4 pb-4 pl-16 text-slate-600">
+            {{ doctor.name }} practices at {{ doctor.hospital.name|default:"the hospital listed on this profile" }}{% if doctor.location %} in {{ doctor.location.name }}{% endif %}. You can find the full address and contact details in the Hospital Info section.
+          </div>
+        </details>
+
+        <details class="group bg-white rounded-xl border border-slate-200 overflow-hidden">
+          <summary class="flex items-center gap-3 p-4 cursor-pointer hover:bg-slate-50 transition-colors">
+            <div class="w-8 h-8 rounded-lg bg-accent/10 flex items-center justify-center text-accent flex-shrink-0">
+              <i class="fas fa-phone-alt"></i>
+            </div>
+            <span class="font-medium text-slate-800">How do I contact {{ doctor.name }}'s hospital?</span>
+            <i class="fas fa-chevron-down ml-auto text-slate-400 group-open:rotate-180 transition-transform"></i>
+          </summary>
+          <div class="px-4 pb-4 pl-16 text-slate-600">
+            You can reach {{ doctor.hospital.name|default:"the hospital" }} using the contact numbers listed in the "Contact for appointments" section on this profile. The hospital staff can assist with appointment scheduling, fees, and other queries.
+          </div>
+        </details>
+      </div>
+    </div>
+  </section>
+</main>
+{% endblock content %}

@@ -1,0 +1,627 @@
+{% extends 'base_new.html' %}
+{% load static %}
+{% load humanize %}
+
+{% block seo_head %}
+<title>Find a Doctor or Hospital in Bangladesh — Verified Directory | BdDoc24</title>
+<meta name='robots' content='index, follow, max-image-preview:large, max-snippet:-1, max-video-preview:-1' />
+<meta name="description" content="Looking for a verified doctor or hospital in Bangladesh? BdDoc24 lists {{ doctors_count|intcomma }}+ doctors and {{ hospitals_count }}+ hospitals across all districts. Search by name, specialty, or location — free." />
+
+<!-- Open Graph Meta Datas -->
+<meta property="og:title" content="Find a Verified Doctor or Hospital in Bangladesh — BdDoc24" />
+<meta property="og:description" content="Search {{ doctors_count|intcomma }}+ verified doctors and {{ hospitals_count }}+ hospitals across Bangladesh. Free healthcare directory." />
+<meta property="og:url" content="https://bddoc24.com/" />
+<meta property="og:image" content="https://bddoc24.com{% static 'images/bddoc24-og-image.jpg' %}" />
+<meta property="og:image:width" content="1200" />
+<meta property="og:image:height" content="630" />
+<meta property="og:image:alt" content="BdDoc24 - Find Doctors & Hospitals in Bangladesh" />
+<meta property="og:image:type" content="image/jpg" />
+
+<!-- Twitter Datas -->
+<meta name="twitter:title" content="Find Doctors & Hospitals in Bangladesh — BdDoc24" />
+<meta name="twitter:description" content="Find verified doctors, hospitals, and chambers across Bangladesh. Book appointments with top healthcare professionals on BdDoc24." />
+<meta name="twitter:image" content="https://bddoc24.com{% static 'images/bddoc24-og-image.jpg' %}" />
+<link rel="canonical" href="https://bddoc24.com/" />
+{% endblock seo_head %}
+
+{% block content %}
+  <main class="font-body">
+    <!-- Hero Section -->
+    <section class="animated-bg min-h-[85vh] sm:min-h-[75vh] lg:min-h-[70vh] flex items-center relative">
+      
+      <!-- Floating Shapes -->
+      <div class="absolute top-20 left-10 w-32 h-32 bg-accent/20 rounded-full blur-2xl floating"></div>
+      <div class="absolute top-40 right-20 w-24 h-24 bg-secondary/20 rounded-full blur-xl floating floating-delay-1"></div>
+      <div class="absolute bottom-20 left-1/4 w-40 h-40 bg-accent/10 rounded-full blur-3xl floating floating-delay-2"></div>
+      <div class="absolute bottom-40 right-1/3 w-20 h-20 bg-secondary/15 rounded-full blur-lg floating"></div>
+      
+      <!-- Grid Pattern Overlay -->
+      <div class="absolute inset-0 bg-[url('data:image/svg+xml,%3Csvg width=\'60\' height=\'60\' viewBox=\'0 0 60 60\' xmlns=\'http://www.w3.org/2000/svg\'%3E%3Cg fill=\'none\' fill-rule=\'evenodd\'%3E%3Cg fill=\'%23ffffff\' fill-opacity=\'0.03\'%3E%3Cpath d=\'M36 34v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zm0-30V0h-2v4h-4v2h4v4h2V6h4V4h-4zM6 34v-4H4v4H0v2h4v4h2v-4h4v-2H6zM6 4V0H4v4H0v2h4v4h2V6h4V4H6z\'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E' )]"></div>
+      
+      <!-- Glossy glass overlay at top -->
+      <div class="absolute top-0 left-0 right-0 h-48 sm:h-64 bg-gradient-to-b from-white/[0.08] to-transparent backdrop-blur-[2px] pointer-events-none"></div>
+      
+      <!-- Main Content Container -->
+      <div class="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12 sm:py-16 w-full">
+        <div class="max-w-4xl mx-auto">
+          
+          <!-- Trust Badge -->
+          <div class="flex justify-center mb-6">
+            <div class="inline-flex items-center gap-3 px-5 py-2.5 rounded-full glass-dark">
+              <span class="relative flex h-3 w-3">
+                <span class="animate-ping absolute inline-flex h-full w-full rounded-full bg-green-400 opacity-75"></span>
+                <span class="relative inline-flex rounded-full h-3 w-3 bg-green-500"></span>
+              </span>
+              <span class="text-white/90 text-sm font-medium">{{ doctors_count|intcomma }}+ Verified Doctors Available</span>
+            </div>
+          </div>
+          
+          <!-- Main Heading -->
+          <h1 class="font-display font-bold text-4xl sm:text-5xl lg:text-6xl text-white text-center leading-tight mb-6">
+            Find Your Perfect Doctor in Bangladesh
+          </h1>
+          
+          <p class="text-lg sm:text-xl text-white/70 text-center mb-8 max-w-2xl mx-auto">
+            Connect with {{ doctors_count|intcomma }}+ verified doctors and {{ hospitals_count|intcomma }} hospitals. 
+            <span class="text-accent">Your health journey <b>starts here.</b></span>
+          </p>
+
+          <!-- Search Box -->
+          <div class="glass rounded-3xl p-3 sm:p-4 max-w-3xl mx-auto shadow-2xl shadow-black/20">
+            
+            <!-- Tabs -->
+            <div class="flex bg-slate-100 rounded-2xl p-1.5 mb-3 sm:mb-4">
+              <button onclick="switchTab('doctor')" id="doctorTab" class="flex-1 py-3 sm:py-2.5 px-3 sm:px-4 rounded-xl font-semibold text-sm bg-white text-slate-900 shadow-sm transition-all flex items-center justify-center gap-2 btn-touch">
+                <i class="fas fa-user-md text-slate-900"></i>
+                <span class="hidden sm:inline">Find Doctors</span>
+                <span class="sm:hidden text-xs">Doctors</span>
+              </button>
+              <button onclick="switchTab('hospital')" id="hospitalTab" class="flex-1 py-3 sm:py-2.5 px-3 sm:px-4 rounded-xl font-semibold text-sm text-slate-500 hover:text-slate-700 transition-all flex items-center justify-center gap-2 btn-touch">
+                <i class="fas fa-hospital"></i>
+                <span class="hidden sm:inline">Find Hospitals</span>
+                <span class="sm:hidden text-xs">Hospitals</span>
+              </button>
+            </div>
+
+            <!-- Doctor Search -->
+            <form id="doctorSearchForm" action="{% url 'doctor_list' %}" method="get" class="space-y-3 sm:space-y-3">
+              <div class="grid grid-cols-1 gap-3 md:grid-cols-3">
+                <div class="relative">
+                  <label for="home-doctor-name" class="sr-only">Search doctor by name</label>
+                  <input id="home-doctor-name" type="text" name="name" placeholder="Doctor Name" class="w-full pl-10 sm:pl-11 pr-4 py-3 sm:py-3.5 rounded-xl bg-slate-50 border border-border text-slate-900 placeholder:text-slate-400 focus:ring-2 focus:ring-slate-900 focus:bg-white transition-all text-base sm:text-sm">
+                  <svg class="absolute left-3.5 sm:left-4 top-1/2 -translate-y-1/2 w-4 sm:w-5 h-4 sm:h-5 text-slate-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"/></svg>
+                </div>
+                <div class="relative">
+                  <label for="home-doctor-specialty" class="sr-only">Select specialty</label>
+                  <select id="home-doctor-specialty" name="specialty" class="w-full pl-10 sm:pl-11 pr-10 py-3 sm:py-3.5 rounded-xl bg-slate-50 border border-border text-slate-900 appearance-none focus:ring-2 focus:ring-slate-900 focus:bg-white transition-all text-base sm:text-sm btn-touch">
+                    <option value="">All Specialties</option>
+                    {% for spec in featured_specialties %}
+                    <option value="{{ spec.slug }}">{{ spec.name }}</option>
+                    {% endfor %}
+                  </select>
+                  <svg class="absolute left-3.5 sm:left-4 top-1/2 -translate-y-1/2 w-4 sm:w-5 h-4 sm:h-5 text-slate-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2"/></svg>
+                  <svg class="absolute right-3 sm:right-4 top-1/2 -translate-y-1/2 w-4 sm:w-5 h-4 sm:h-5 text-slate-400 pointer-events-none" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"/></svg>
+                </div>
+                <div class="relative">
+                  <label for="home-doctor-location" class="sr-only">Select location</label>
+                  <select id="home-doctor-location" name="location" class="w-full pl-10 sm:pl-11 pr-10 py-3 sm:py-3.5 rounded-xl bg-slate-50 border border-border text-slate-900 appearance-none focus:ring-2 focus:ring-slate-900 focus:bg-white transition-all text-base sm:text-sm btn-touch">
+                    <option value="">All Locations</option>
+                    {% for loc in locations_for_search %}
+                    <option value="{{ loc.slug }}">{{ loc.name }}</option>
+                    {% endfor %}
+                  </select>
+                  <svg class="absolute left-3.5 sm:left-4 top-1/2 -translate-y-1/2 w-4 sm:w-5 h-4 sm:h-5 text-slate-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z"/><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 11a3 3 0 11-6 0 3 3 0 016 0z"/></svg>
+                  <svg class="absolute right-3 sm:right-4 top-1/2 -translate-y-1/2 w-4 sm:w-5 h-4 sm:h-5 text-slate-400 pointer-events-none" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"/></svg>
+                </div>
+              </div>
+              <div class="text-center mt-3">
+                <button type="submit" class="w-full md:w-auto px-8 sm:px-12 py-3 sm:py-3.5 bg-gradient-to-r from-accent to-cyan-600 text-white font-bold rounded-xl hover:from-cyan-600 hover:to-accent transition-all shadow-lg shadow-accent/30 flex items-center justify-center gap-2 mx-auto btn-touch">
+                  <i class="fas fa-search"></i>
+                  <span>Search</span>
+                </button>
+              </div>
+            </form> 
+
+            <!-- Hospital Search (Hidden) -->
+            <form id="hospitalSearchForm" action="{% url 'hospital_list' %}" method="get" class="hidden space-y-3 sm:space-y-3">
+              <div class="grid grid-cols-1 gap-3 md:grid-cols-2">
+                <div class="relative">
+                  <label for="home-hospital-name" class="sr-only">Search hospital by name</label>
+                  <input id="home-hospital-name" type="text" name="name" placeholder="Hospital Name" class="w-full pl-10 sm:pl-11 pr-4 py-3 sm:py-3.5 rounded-xl bg-slate-50 border border-border text-slate-900 placeholder:text-slate-400 focus:ring-2 focus:ring-slate-900 focus:bg-white transition-all text-base sm:text-sm">
+                  <svg class="absolute left-3.5 sm:left-4 top-1/2 -translate-y-1/2 w-4 sm:w-5 h-4 sm:h-5 text-slate-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 21V5a2 2 0 00-2-2H7a2 2 0 00-2 2v16m14 0h2m-2 0h-5m-9 0H3m2 0h5M9 7h1m-1 4h1m4-4h1m-1 4h1m-5 10v-5a1 1 0 011-1h2a1 1 0 011 1v5m-4 0h4"/></svg>
+                </div>
+                <div class="relative">
+                  <label for="home-hospital-location" class="sr-only">Filter by location</label>
+                  <select id="home-hospital-location" name="location" class="w-full pl-10 sm:pl-11 pr-10 py-3 sm:py-3.5 rounded-xl bg-slate-50 border border-border text-slate-900 appearance-none focus:ring-2 focus:ring-slate-900 focus:bg-white transition-all text-base sm:text-sm btn-touch">
+                    <option value="">All Locations</option>
+                    {% for loc in locations_for_search %}
+                    <option value="{{ loc.slug }}">{{ loc.name }}</option>
+                    {% endfor %}
+                  </select>
+                  <svg class="absolute left-3.5 sm:left-4 top-1/2 -translate-y-1/2 w-4 sm:w-5 h-4 sm:h-5 text-slate-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z"/><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 11a3 3 0 11-6 0 3 3 0 016 0z"/></svg>
+                  <svg class="absolute right-3 sm:right-4 top-1/2 -translate-y-1/2 w-4 sm:w-5 h-4 sm:h-5 text-slate-400 pointer-events-none" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"/></svg>
+                </div>
+              </div>
+              <div class="text-center mt-3">
+                <button type="submit" class="w-full md:w-auto px-8 sm:px-12 py-3 sm:py-3.5 bg-gradient-to-r from-accent to-cyan-600 text-white font-bold rounded-xl hover:from-cyan-600 hover:to-accent transition-all shadow-lg shadow-accent/30 flex items-center justify-center gap-2 mx-auto btn-touch">
+                  <i class="fas fa-search"></i>
+                  <span>Search</span>
+                </button>
+              </div>
+            </form>
+          </div>
+
+          <!-- Stats -->
+          <div class="grid grid-cols-2 sm:grid-cols-4 gap-3 sm:gap-4 mt-8 sm:mt-10 max-w-4xl mx-auto pb-24 sm:pb-28">
+            <div class="glass-dark rounded-xl p-3 sm:p-4 text-center hover:bg-white/20 transition-all cursor-pointer group">
+              <div class="text-xl sm:text-2xl font-display font-bold text-white mb-1 group-hover:scale-110 transition-transform">
+                <span class="text-cyan-300">{{ doctors_count|intcomma }}+</span>
+              </div>
+              <div class="text-cyan-200/90">Verified Doctors</div>
+            </div>
+            <div class="glass-dark rounded-xl p-3 sm:p-4 text-center hover:bg-white/20 transition-all cursor-pointer group">
+              <div class="text-xl sm:text-2xl font-display font-bold text-white mb-1 group-hover:scale-110 transition-transform">
+                <span class="text-cyan-300">{{ hospitals_count|intcomma }}+</span>
+              </div>
+              <div class="text-cyan-200/90">Hospitals</div>
+            </div>
+            <div class="glass-dark rounded-xl p-3 sm:p-4 text-center hover:bg-white/20 transition-all cursor-pointer group">
+              <div class="text-xl sm:text-2xl font-display font-bold text-white mb-1 group-hover:scale-110 transition-transform">
+                <span class="text-cyan-300">{{ locations_count }}</span>
+              </div>
+              <div class="text-cyan-200/90">Districts</div>
+            </div>
+            <div class="glass-dark rounded-xl p-3 sm:p-4 text-center hover:bg-white/20 transition-all cursor-pointer group">
+              <div class="text-xl sm:text-2xl font-display font-bold text-white mb-1 group-hover:scale-110 transition-transform">
+                <span class="text-cyan-300">{{ featured_specialties|length }}</span>
+              </div>
+              <div class="text-cyan-200/90">Specialties</div>
+            </div>
+          </div>
+          
+        </div>
+      </div>
+
+    </section>
+
+    <!-- Featured Doctors -->
+    <section id="doctors" class="py-10 sm:py-14 bg-slate-50">
+      <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div class="text-center mb-12">
+          <span class="inline-block px-4 py-1.5 bg-emerald-100 text-emerald-700 text-sm font-semibold rounded-full mb-4">Top Rated</span>
+          <h2 class="font-display font-bold text-3xl sm:text-4xl text-slate-900 mb-3">Who Are the Top Doctors in Bangladesh?</h2>
+          <p class="text-slate-600 text-lg max-w-2xl mx-auto">Find and book appointments with Bangladesh's most trusted healthcare professionals across all specialties</p>
+        </div>
+
+        <!-- Filter Tags -->
+        <div class="flex flex-wrap justify-center gap-2 mb-10">
+          {% for dept in featured_departments %}
+          <a href="{% url 'department_detail' dept.slug %}" class="px-4 py-2 rounded-full bg-white text-slate-600 font-medium text-sm border border-slate-200 hover:border-slate-700 hover:text-slate-900 transition hover:scale-105">
+            {{ dept.name }}
+          </a>
+          {% endfor %}
+        </div>
+
+        <!-- Doctor Cards -->
+        <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
+          {% for doctor in doctors %}
+          <div class="bg-white rounded-2xl border border-slate-100 card-hover overflow-hidden group flex flex-col h-full">
+            <div class="p-5 flex-1">
+              <div class="flex gap-4">
+                <div class="relative">
+                  <img loading="lazy" src="{{ doctor.get_profile_picture_url }}" alt="{{ doctor.name }}" class="w-20 h-20 rounded-2xl object-cover shadow-md">
+                </div>
+                <div class="flex-1 min-w-0">
+                  <h2 class="font-display font-semibold text-slate-900 truncate text-lg">{{ doctor.name }}</h2>
+                  <p class="text-sm text-slate-500 truncate">{{ doctor.designation }}</p>
+                  <div class="flex items-center gap-2 mb-2">
+                    <p class="text-sm text-slate-700 font-medium truncate">
+                      {% for spec in doctor.specialties.all|slice:":2" %}{{ spec.name }}{% if not forloop.last %}, {% endif %}{% endfor %}
+                    </p>
+                  </div>
+                  <div class="flex items-center gap-1.5 mt-2">
+                    <div class="flex items-center">
+                      {% for i in "12345"|make_list %}
+                      <svg class="w-3.5 h-3.5 {% if forloop.counter <= doctor.avg_rating|default:5|floatformat:0 %}text-amber-400{% else %}text-slate-300{% endif %}" fill="currentColor" viewBox="0 0 20 20"><path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"/></svg>
+                      {% endfor %}
+                    </div>
+                    <span class="text-sm font-semibold text-slate-900">{{ doctor.avg_rating|floatformat:1|default:"5.0" }}</span>
+                    <span class="text-xs text-slate-400">({{ doctor.review_count|default:0 }})</span>
+                  </div>
+                </div>
+              </div>
+              
+              <div class="mt-4 pt-4 border-t border-slate-100">
+                <div class="flex items-center justify-between text-xs text-slate-500">
+                  <span class="flex items-center gap-1"><i class="fas fa-briefcase"></i> {{ doctor.experience_years|default:"N/A" }} yrs</span>
+                  <span class="flex items-center gap-1"><i class="fas fa-map-marker-alt"></i> {{ doctor.location|default:"N/A" }}</span>
+                </div>
+              </div>
+            </div>
+            <div class="p-4 pt-0 mt-auto border-t border-slate-100">
+              <a href="{% url 'doctor_profile' doctor.slug %}" aria-label="View details for {{ doctor.name }}" class="w-full py-3 bg-gradient-to-r from-slate-900 to-slate-700 text-white font-bold rounded-xl border-2 border-slate-600 hover:from-slate-800 hover:to-slate-600 hover:border-slate-500 transition-all shadow-lg shadow-slate-900/20 flex items-center justify-center gap-2">
+                <i class="fas fa-eye"></i> View Details
+              </a>
+            </div>
+          </div>
+      {% empty %}
+      <div class="col-span-full text-center py-16">
+        <div class="w-20 h-20 mx-auto mb-4 rounded-full bg-slate-100 flex items-center justify-center">
+          <i class="fas fa-user-md text-3xl text-slate-400"></i>
+        </div>
+        <p class="text-slate-500 text-lg">No doctors found</p>
+      </div>
+      {% endfor %}
+      </div>
+
+      <div class="text-center mt-12">
+        <a href="{% url 'doctor_list' %}" class="inline-flex items-center gap-2 px-8 py-4 bg-gradient-to-r from-accent to-cyan-600 text-white font-bold rounded-xl hover:from-slate-800 hover:to-slate-600 transition-all group shadow-lg shadow-slate-900/30">
+          Browse All Doctors 
+          <i class="fas fa-arrow-right group-hover:translate-x-1 transition-transform"></i>
+        </a>
+      </div>
+      </div>
+    </section>
+
+    <!-- Hospitals Section -->
+    <section id="hospitals" class="py-16 sm:py-24 bg-white">
+      <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div class="text-center mb-12">
+          <span class="inline-block px-4 py-1.5 bg-emerald-100 text-emerald-700 text-sm font-semibold rounded-full mb-4">Trusted Care</span>
+          <h2 class="font-display font-bold text-3xl sm:text-4xl text-slate-900 mb-3">Which Are the Best Hospitals in Bangladesh?</h2>
+          <p class="text-slate-600 text-lg max-w-2xl mx-auto">Find leading healthcare facilities across all districts with verified patient reviews and ratings</p>
+        </div>
+
+        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+          {% for hospital in hospitals %}
+          <div class="bg-white rounded-2xl border border-slate-100 card-hover overflow-hidden group flex flex-col h-full relative">
+            <!-- Image -->
+            <div class="h-52 overflow-hidden relative">
+              <img loading="lazy" src="{% if hospital.image %}{{ hospital.image.url }}{% else %}{% static 'images/hospital-default-image.jpg' %}{% endif %}" alt="{{ hospital.name }}" class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500">
+              <div class="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent"></div>
+              {% if hospital.index_status %}
+              <div class="absolute top-4 right-4 px-3 py-1.5 bg-green-500 text-white text-xs font-semibold rounded-full flex items-center gap-1.5">
+                <svg class="w-3 h-3" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"/></svg>
+              </div>
+              {% endif %}
+            </div>
+            
+            <div class="p-5 flex-1 flex flex-col">
+              <h2 class="font-display font-bold text-lg text-slate-800 mb-1">{{ hospital.name }}</h2>
+              <p class="text-sm text-slate-500 flex items-center gap-2 mb-4">
+                <svg class="w-4 h-4 text-accent" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z"/><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 11a3 3 0 11-6 0 3 3 0 016 0z"/></svg>
+                {{ hospital.location.name|default:"Bangladesh" }}
+              </p>
+              
+              <div class="flex items-center gap-3 mb-5">
+                <div class="flex items-center gap-1.5">
+                  <div class="flex">
+                    {% for i in "12345"|make_list %}
+                    <svg class="w-4 h-4 {% if forloop.counter <= hospital.avg_rating|floatformat:0|default:4 %}text-amber-400{% else %}text-slate-300{% endif %}" fill="currentColor" viewBox="0 0 20 20"><path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"/></svg>
+                    {% endfor %}
+                  </div>
+                  <span class="font-semibold text-slate-900 ml-1">{{ hospital.avg_rating|floatformat:1|default:"4.5" }}</span>
+                </div>
+                <span class="text-slate-300">|</span>
+                <span class="text-sm text-slate-500">{{ hospital.review_count|default:0 }} reviews</span>
+              </div>
+              
+              <div class="pt-4">
+              <a href="{% url 'hospital_detail' hospital.slug %}" aria-label="View details for {{ hospital.name }}" class="w-full py-3 bg-gradient-to-r from-slate-900 to-slate-700 text-white font-bold rounded-xl border-2 border-slate-600 hover:from-slate-800 hover:to-slate-600 hover:border-slate-500 transition-all shadow-lg shadow-slate-900/20 flex items-center justify-center gap-2">
+                <i class="fas fa-eye"></i> View Details
+              </a>
+              </div>
+            </div>
+          </div>
+          {% empty %}
+          <div class="col-span-full text-center py-16">
+            <div class="w-20 h-20 mx-auto mb-4 rounded-full bg-slate-100 flex items-center justify-center">
+              <i class="fas fa-hospital text-3xl text-slate-400"></i>
+            </div>
+            <p class="text-slate-500 text-lg">No hospitals found</p>
+          </div>
+          {% endfor %}
+        </div>
+
+        <div class="text-center mt-12">
+          <a href="{% url 'hospital_list' %}" class="inline-flex items-center gap-2 px-8 py-4 bg-gradient-to-r from-accent to-cyan-600 text-white font-bold rounded-xl hover:from-slate-800 hover:to-slate-600 transition-all group shadow-lg shadow-slate-900/30">
+            Browse All Hospitals 
+            <i class="fas fa-arrow-right group-hover:translate-x-1 transition-transform"></i>
+          </a>
+        </div>
+      </div>
+    </section>
+
+    <!-- Specialties -->
+    <section id="specialties" class="py-16 sm:py-24 bg-gradient-to-b from-slate-50 to-white">
+      <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div class="text-center mb-12">
+          <span class="inline-block px-4 py-1.5 bg-emerald-100 text-emerald-700 text-sm font-semibold rounded-full mb-4">Explore</span>
+          <h2 class="font-display font-bold text-3xl sm:text-4xl text-slate-900 mb-3">Browse by Specialty</h2>
+          <p class="text-slate-600 text-lg">Find the right specialist for your needs</p>
+        </div>
+
+        <div class="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 xl:grid-cols-6 gap-4">
+          {% for dept in featured_departments_all %}
+          <a href="{% url 'department_detail' dept.slug %}" class="group bg-white rounded-2xl p-5 border border-slate-100 card-hover text-center relative overflow-hidden">
+            <div class="absolute inset-0 bg-gradient-to-br from-slate-50 to-slate-50 group-hover:from-slate-100 group-hover:to-slate-200 transition-all"></div>
+            <div class="relative">
+              <div class="w-14 h-14 mx-auto mb-3 rounded-2xl bg-gradient-to-br from-slate-100 to-slate-50 flex items-center justify-center group-hover:from-slate-700 group-hover:to-slate-600 transition-all">
+                <svg class="w-7 h-7 text-slate-700 group-hover:text-white transition-colors" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4.318 6.318a4.5 4.5 0 000 6.364L12 20.364l7.682-7.682a4.5 4.5 0 00-6.364-6.364L12 7.636l-1.318-1.318a4.5 4.5 0 00-6.364 0z"/></svg>
+              </div>
+              <h2 class="font-semibold text-slate-900 text-sm mb-1">{{ dept.name }}</h2>
+              <p class="text-xs text-slate-500">{{ dept.doctor_count }} doctors</p>
+            </div>
+          </a>
+          {% endfor %}
+        </div>
+
+        <div class="text-center mt-10">
+          <a href="{% url 'department_list' %}" class="inline-flex items-center gap-2 px-6 py-3 bg-gradient-to-r from-accent to-cyan-600 text-white font-semibold rounded-xl hover:from-cyan-600 hover:to-accent transition-all shadow-lg">
+            <i class="fas fa-folder-open"></i>
+            Explore All Departments
+          </a>
+        </div>
+      </div>
+    </section>
+
+    <!-- Features / Why Choose Us -->
+    <section class="py-16 sm:py-24 bg-slate-900 text-white relative overflow-hidden">
+      <div class="absolute inset-0 bg-[url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg fill='%23ffffff' fill-opacity='0.03'%3E%3Cpath d='M36 34v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zm0-30V0h-2v4h-4v2h4v4h2V6h4V4h-4zM6 34v-4H4v4H0v2h4v4h2v-4h4v-2H6zM6 4V0H4v4H0v2h4v4h2V6h4V4H6z'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E")]"></div>
+      
+      <div class="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div class="text-center mb-16">
+          <span class="inline-block px-4 py-1.5 bg-emerald-100 text-emerald-700 text-sm font-semibold rounded-full mb-4">Why BdDoc24</span>
+          <h2 class="font-display font-bold text-3xl sm:text-4xl mb-3">Why Choose Us</h2>
+          <p class="text-white/80 text-lg max-w-2xl mx-auto">We're trusted by thousands of patients across Bangladesh</p>
+        </div>
+
+        <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
+          <div class="text-center group p-6 rounded-2xl bg-white/5 border border-white/10 hover:bg-white/10 transition-all">
+            <div class="w-16 h-16 mx-auto mb-4 rounded-2xl bg-gradient-to-br from-slate-800 to-slate-900 flex items-center justify-center shadow-lg shadow-slate-900/30 group-hover:scale-110 transition-transform">
+              <svg class="w-8 h-8 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z"/></svg>
+            </div>
+            <h3 class="font-display font-semibold text-xl mb-2">Verified Doctors</h3>
+            <p class="text-white/80 text-sm">All doctors are verified for authenticity and credentials</p>
+          </div>
+          
+          <div class="text-center group p-6 rounded-2xl bg-white/5 border border-white/10 hover:bg-white/10 transition-all">
+            <div class="w-16 h-16 mx-auto mb-4 rounded-2xl bg-gradient-to-br from-secondary to-blue-600 flex items-center justify-center shadow-lg shadow-secondary/30 group-hover:scale-110 transition-transform">
+              <svg class="w-8 h-8 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"/></svg>
+            </div>
+            <h3 class="font-display font-semibold text-xl mb-2">Quick Booking</h3>
+            <p class="text-white/80 text-sm">Book appointments through the doctor’s contact number provided in the doctors profile</p>
+          </div>
+          
+          <div class="text-center group p-6 rounded-2xl bg-white/5 border border-white/10 hover:bg-white/10 transition-all">
+            <div class="w-16 h-16 mx-auto mb-4 rounded-2xl bg-gradient-to-br from-emerald-500 to-green-600 flex items-center justify-center shadow-lg shadow-emerald-500/30 group-hover:scale-110 transition-transform">
+              <svg class="w-8 h-8 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z"/><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 11a3 3 0 11-6 0 3 3 0 016 0z"/></svg>
+            </div>
+            <h3 class="font-display font-semibold text-xl mb-2">All Over Bangladesh</h3>
+            <p class="text-white/80 text-sm">Find doctors in all {{ locations_count }} districts of Bangladesh</p>
+          </div>
+          
+          <div class="text-center group p-6 rounded-2xl bg-white/5 border border-white/10 hover:bg-white/10 transition-all">
+            <div class="w-16 h-16 mx-auto mb-4 rounded-2xl bg-gradient-to-br from-purple-500 to-purple-700 flex items-center justify-center shadow-lg shadow-purple-500/30 group-hover:scale-110 transition-transform">
+              <svg class="w-8 h-8 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 12h.01M12 12h.01M16 12h.01M21 12c0 4.418-4.03 8-9 8a9.863 9.863 0 01-4.255-.949L3 20l1.395-3.72C3.512 15.042 3 13.574 3 12c0-4.418 4.03-8 9-8s9 3.582 9 8z"/></svg>
+            </div>
+            <h3 class="font-display font-semibold text-xl mb-2">24/7 Support</h3>
+            <p class="text-white/80 text-sm">Get assistance anytime with our dedicated support</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- How It Works -->
+    <section class="py-16 sm:py-24 bg-white">
+      <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div class="text-center mb-16">
+          <span class="inline-block px-4 py-1.5 bg-emerald-100 text-emerald-700 text-sm font-semibold rounded-full mb-4">Simple Process</span>
+          <h2 class="font-display font-bold text-3xl sm:text-4xl text-slate-900 mb-3">How <span class="gradient-text">BdDoc24</span> Works</h2>
+          <p class="text-slate-600 text-lg">Book your appointment in three simple steps</p>
+        </div>
+
+        <div class="grid grid-cols-1 md:grid-cols-3 gap-12 relative">
+          <div class="hidden md:block absolute top-8 left-[16%] right-[16%] h-0.5 bg-gradient-to-r from-transparent via-cyan-500/40 to-transparent mt-2"></div>
+
+          <div class="relative text-center group">
+            <div class="w-12 h-12 mx-auto mb-5 rounded-full bg-gradient-to-br from-cyan-500 to-teal-600 flex items-center justify-center text-white font-bold text-base shadow-lg shadow-cyan-500/30">1</div>
+            <div class="w-24 h-24 mx-auto mb-6 rounded-2xl bg-gradient-to-br from-cyan-500 to-teal-600 flex items-center justify-center shadow-xl shadow-cyan-500/30 group-hover:scale-110 group-hover:-translate-y-1 transition-all duration-300">
+              <svg class="w-12 h-12 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"/></svg>
+            </div>
+            <h2 class="font-display font-semibold text-xl text-slate-900 mb-2">Search</h2>
+            <p class="text-slate-600">Find doctors by name, specialty, or location using our smart search</p>
+          </div>
+
+          <div class="relative text-center group">
+            <div class="w-12 h-12 mx-auto mb-5 rounded-full bg-gradient-to-br from-emerald-500 to-green-600 flex items-center justify-center text-white font-bold text-base shadow-lg shadow-emerald-500/30">2</div>
+            <div class="w-24 h-24 mx-auto mb-6 rounded-2xl bg-gradient-to-br from-emerald-500 to-green-600 flex items-center justify-center shadow-xl shadow-emerald-500/30 group-hover:scale-110 group-hover:-translate-y-1 transition-all duration-300">
+              <svg class="w-12 h-12 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2m-6 9l2 2 4-4"/></svg>
+            </div>
+            <h2 class="font-display font-semibold text-xl text-slate-900 mb-2">Compare</h2>
+            <p class="text-slate-600">Check qualifications, reviews, experience, and availability</p>
+          </div>
+
+          <div class="relative text-center group">
+            <div class="w-12 h-12 mx-auto mb-5 rounded-full bg-gradient-to-br from-purple-500 to-purple-700 flex items-center justify-center text-white font-bold text-base shadow-lg shadow-purple-500/30">3</div>
+            <div class="w-24 h-24 mx-auto mb-6 rounded-2xl bg-gradient-to-br from-purple-500 to-purple-700 flex items-center justify-center shadow-xl shadow-purple-500/30 group-hover:scale-110 group-hover:-translate-y-1 transition-all duration-300">
+              <svg class="w-12 h-12 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z"/></svg>
+            </div>
+            <h2 class="font-display font-semibold text-xl text-slate-900 mb-2">Book</h2>
+            <p class="text-slate-500">Book your appointment instantly and receive immediate confirmation using the contact number provided on the doctor's profile.</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- CTA -->
+    <section class="py-16 sm:py-24 bg-gradient-to-br from-slate-800 to-slate-900 relative overflow-hidden">
+      <div class="absolute inset-0 bg-[url("data:image/svg+xml,%3Csvg width='100' height='100' viewBox='0 0 100 100' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M11 18c3.866 0 7-3.134 7-7s-3.134-7-7-7-7 3.134-7 7 3.134 7 7 7zm48 25c3.866 0 7-3.134 7-7s-3.134-7-7-7-7 3.134-7 7 3.134 7 7 7zm-43-7c1.657 0 3-1.343 3-3s-1.343-3-3-3-3 1.343-3 3 1.343 3 3 3zm63 31c1.657 0 3-1.343 3-3s-1.343-3-3-3-3 1.343-3 3 1.343 3 3 3zM34 90c1.657 0 3-1.343 3-3s-1.343-3-3-3-3 1.343-3 3 1.343 3 3 3zm56-76c1.657 0 3-1.343 3-3s-1.343-3-3-3-3 1.343-3 3 1.343 3 3 3zM12 86c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm28-65c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm23-11c2.76 0 5-2.24 5-5s-2.24-5-5-5-5 2.24-5 5 2.24 5 5 5zm-6 60c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm29 22c2.76 0 5-2.24 5-5s-2.24-5-5-5-5 2.24-5 5 2.24 5 5 5zM32 63c2.76 0 5-2.24 5-5s-2.24-5-5-5-5 2.24-5 5 2.24 5 5 5zm57-13c2.76 0 5-2.24 5-5s-2.24-5-5-5-5 2.24-5 5 2.24 5 5 5zm-9-21c1.105 0 2-.895 2-2s-.895-2-2-2-2 .895-2 2 .895 2 2 2zM60 91c1.105 0 2-.895 2-2s-.895-2-2-2-2 .895-2 2 .895 2 2 2zM35 41c1.105 0 2-.895 2-2s-.895-2-2-2-2 .895-2 2 .895 2 2 2zM12 60c1.105 0 2-.895 2-2s-.895-2-2-2-2 .895-2 2 .895 2 2 2z' fill='%23ffffff' fill-opacity='0.1' fill-rule='evenodd'/%3E%3C/svg%3E")]"></div>
+      
+      <div class="relative max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
+        <h2 class="font-display font-bold text-3xl sm:text-4xl text-white mb-4">Are You a Healthcare Professional?</h2>
+        <p class="text-white/90 text-lg mb-8 max-w-2xl mx-auto">Join our network of {{ doctors_count|intcomma }}+ verified doctors and reach more patients across Bangladesh.</p>
+        <div class="flex flex-col sm:flex-row gap-4 justify-center">
+          <a href="{% url 'contact_us' %}" class="px-8 py-4 bg-white text-slate-900 font-bold rounded-xl hover:shadow-xl hover:scale-105 transition-all flex items-center justify-center gap-2">
+            <i class="fas fa-user-plus"></i> Register as Doctor
+          </a>
+          <a href="{% url 'contact_us' %}" class="px-8 py-4 bg-transparent border-2 border-white text-white font-bold rounded-xl hover:bg-white hover:text-slate-900 transition-all flex items-center justify-center gap-2">
+            <i class="fas fa-hospital"></i> Register Hospital
+          </a>
+        </div>
+      </div>
+    </section>
+
+    <!-- FAQ Section -->
+    <section class="py-16 sm:py-24 bg-slate-50">
+      <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div class="text-center mb-12">
+          <h2 class="font-display font-bold text-3xl sm:text-4xl text-slate-900 mb-3">Frequently Asked Questions</h2>
+          <p class="text-slate-600 text-lg max-w-2xl mx-auto">Everything you need to know about using BdDoc24</p>
+        </div>
+        
+        <div class="space-y-3">
+          <!-- Question 1 -->
+          <details class="group bg-white rounded-xl border border-slate-400 overflow-hidden">
+            <summary class="flex items-center gap-3 p-4 cursor-pointer hover:bg-slate-50 transition-colors">
+              <div class="w-8 h-8 rounded-lg bg-accent/10 flex items-center justify-center text-accent flex-shrink-0">
+                <i class="fas fa-search"></i>
+              </div>
+              <span class="font-medium text-slate-800">How do I search for doctors on BdDoc24?</span>
+              <i class="fas fa-chevron-down ml-auto text-slate-400 group-open:rotate-180 transition-transform"></i>
+            </summary>
+            <div class="px-4 pb-4 pl-16 text-slate-600">
+              Use the search bar at the top of the page. Make sure "Doctor" tab is selected, then enter the doctor's name, specialty, or any keyword. You can also filter by location and specialty from the doctor list page.
+            </div>
+          </details>
+
+          <!-- Question 2 -->
+          <details class="group bg-white rounded-xl border border-slate-400 overflow-hidden">
+            <summary class="flex items-center gap-3 p-4 cursor-pointer hover:bg-slate-50 transition-colors">
+              <div class="w-8 h-8 rounded-lg bg-accent/10 flex items-center justify-center text-accent flex-shrink-0">
+                <i class="fas fa-map-marker-alt"></i>
+              </div>
+              <span class="font-medium text-slate-800">How can I find doctors by location?</span>
+              <i class="fas fa-chevron-down ml-auto text-slate-400 group-open:rotate-180 transition-transform"></i>
+            </summary>
+            <div class="px-4 pb-4 pl-16 text-slate-600">
+              You can filter doctors by location using the search filters on the doctor list page. Select your preferred city or area to see doctors available in that location. You can also search for doctors and hospitals directly in your area.
+            </div>
+          </details>
+
+          <!-- Question 3 -->
+          <details class="group bg-white rounded-xl border border-slate-400 overflow-hidden">
+            <summary class="flex items-center gap-3 p-4 cursor-pointer hover:bg-slate-50 transition-colors">
+              <div class="w-8 h-8 rounded-lg bg-accent/10 flex items-center justify-center text-accent flex-shrink-0">
+                <i class="fas fa-hospital"></i>
+              </div>
+              <span class="font-medium text-slate-800">How do I search for hospitals?</span>
+              <i class="fas fa-chevron-down ml-auto text-slate-400 group-open:rotate-180 transition-transform"></i>
+            </summary>
+            <div class="px-4 pb-4 pl-16 text-slate-600">
+              Click on the "Hospital" tab in the search bar at the top of the page. Enter the hospital name or location to find healthcare facilities. You can also browse all hospitals from the "All Hospitals" section on the home page.
+            </div>
+          </details>
+
+          <!-- Question 4 -->
+          <details class="group bg-white rounded-xl border border-slate-400 overflow-hidden">
+            <summary class="flex items-center gap-3 p-4 cursor-pointer hover:bg-slate-50 transition-colors">
+              <div class="w-8 h-8 rounded-lg bg-accent/10 flex items-center justify-center text-accent flex-shrink-0">
+                <i class="fas fa-calendar-check"></i>
+              </div>
+              <span class="font-medium text-slate-800">How do I book an appointment with a doctor?</span>
+              <i class="fas fa-chevron-down ml-auto text-slate-400 group-open:rotate-180 transition-transform"></i>
+            </summary>
+            <div class="px-4 pb-4 pl-16 text-slate-600">
+              Click on any doctor's profile to view their details, qualifications, and contact information. Call the hospital directly using the phone numbers provided to schedule an appointment.
+            </div>
+          </details>
+
+          <!-- Question 5 -->
+          <details class="group bg-white rounded-xl border border-slate-400 overflow-hidden">
+            <summary class="flex items-center gap-3 p-4 cursor-pointer hover:bg-slate-50 transition-colors">
+              <div class="w-8 h-8 rounded-lg bg-accent/10 flex items-center justify-center text-accent flex-shrink-0">
+                <i class="fas fa-user-md"></i>
+              </div>
+              <span class="font-medium text-slate-800">What information can I find on doctor profiles?</span>
+              <i class="fas fa-chevron-down ml-auto text-slate-400 group-open:rotate-180 transition-transform"></i>
+            </summary>
+            <div class="px-4 pb-4 pl-16 text-slate-600">
+              Each doctor profile includes their qualifications, specialties, years of experience, hospital affiliation, location, contact information, and professional experience. You can also see related doctors and frequently asked questions about that doctor.
+            </div>
+          </details>
+
+          <!-- Question 6 -->
+          <details class="group bg-white rounded-xl border border-slate-400 overflow-hidden">
+            <summary class="flex items-center gap-3 p-4 cursor-pointer hover:bg-slate-50 transition-colors">
+              <div class="w-8 h-8 rounded-lg bg-accent/10 flex items-center justify-center text-accent flex-shrink-0">
+                <i class="fas fa-phone-alt"></i>
+              </div>
+              <span class="font-medium text-slate-800">How do I contact a hospital?</span>
+              <i class="fas fa-chevron-down ml-auto text-slate-400 group-open:rotate-180 transition-transform"></i>
+            </summary>
+            <div class="px-4 pb-4 pl-16 text-slate-600">
+              Visit the hospital's detail page to find contact numbers, address, and other information. You can also find hospital contact numbers on any doctor's profile page who works at that hospital in the "Hospital Contact" section.
+            </div>
+          </details>
+
+          <!-- Question 7 -->
+          <details class="group bg-white rounded-xl border border-slate-400 overflow-hidden">
+            <summary class="flex items-center gap-3 p-4 cursor-pointer hover:bg-slate-50 transition-colors">
+              <div class="w-8 h-8 rounded-lg bg-accent/10 flex items-center justify-center text-accent flex-shrink-0">
+                <i class="fas fa-dollar-sign"></i>
+              </div>
+              <span class="font-medium text-slate-800">Is it free to use BdDoc24?</span>
+              <i class="fas fa-chevron-down ml-auto text-slate-400 group-open:rotate-180 transition-transform"></i>
+            </summary>
+            <div class="px-4 pb-4 pl-16 text-slate-600">
+              Yes, BdDoc24 is completely free for patients. You can search for doctors and hospitals, view their profiles, and book appointments without any charges. Our platform helps connect patients with healthcare providers across Bangladesh.
+            </div>
+          </details>
+
+          <!-- Question 8 -->
+          <details class="group bg-white rounded-xl border border-slate-400 overflow-hidden">
+            <summary class="flex items-center gap-3 p-4 cursor-pointer hover:bg-slate-50 transition-colors">
+              <div class="w-8 h-8 rounded-lg bg-accent/10 flex items-center justify-center text-accent flex-shrink-0">
+                <i class="fas fa-user-plus"></i>
+              </div>
+              <span class="font-medium text-slate-800">How do I register as a healthcare provider?</span>
+              <i class="fas fa-chevron-down ml-auto text-slate-400 group-open:rotate-180 transition-transform"></i>
+            </summary>
+            <div class="px-4 pb-4 pl-16 text-slate-600">
+              If you're a doctor or hospital administrator, click on "Register as Doctor" or "Register Hospital" button in the CTA section on our home page. You can also visit our contact page to send us a registration request and our team will get in touch with you.
+            </div>
+          </details>
+        </div>
+      </div>
+    </section>
+  </main>
+
+{% endblock content %}
+
+{% block extra_js %}
+<script>
+  function switchTab(tab) {
+    const doctorForm = document.getElementById('doctorSearchForm');
+    const hospitalForm = document.getElementById('hospitalSearchForm');
+    const doctorTab = document.getElementById('doctorTab');
+    const hospitalTab = document.getElementById('hospitalTab');
+
+    if (tab === 'doctor') {
+      doctorForm.classList.remove('hidden');
+      hospitalForm.classList.add('hidden');
+      doctorTab.className = 'flex-1 py-2.5 px-4 rounded-xl font-semibold text-sm bg-white text-slate-900 shadow-sm transition-all flex items-center justify-center gap-2';
+      hospitalTab.className = 'flex-1 py-2.5 px-4 rounded-xl font-semibold text-sm text-slate-500 hover:text-slate-700 transition-all flex items-center justify-center gap-2';
+      document.getElementById('hospitalTab').querySelector('i').classList.remove('text-slate-900');
+      document.getElementById('doctorTab').querySelector('i').classList.add('text-slate-900');
+    } else {
+      hospitalForm.classList.remove('hidden');
+      doctorForm.classList.add('hidden');
+      hospitalTab.className = 'flex-1 py-2.5 px-4 rounded-xl font-semibold text-sm bg-white text-slate-900 shadow-sm transition-all flex items-center justify-center gap-2';
+      doctorTab.className = 'flex-1 py-2.5 px-4 rounded-xl font-semibold text-sm text-slate-500 hover:text-slate-700 transition-all flex items-center justify-center gap-2';
+      document.getElementById('doctorTab').querySelector('i').classList.remove('text-slate-900');
+      document.getElementById('hospitalTab').querySelector('i').classList.add('text-slate-900');
+    }
+  }
+</script>
+{% endblock extra_js %}

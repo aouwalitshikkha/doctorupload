@@ -1,0 +1,58 @@
+        {% for doctor in doctors %}
+        <div class="bg-white border border-border rounded-xl p-6 hover:shadow-md transition-shadow duration-300 flex flex-col h-full" role="article" aria-label="{{ doctor.name }} - {{ doctor.designation }}">
+          <div class="flex gap-4 mb-4">
+            <img loading="lazy"               src="{{ doctor.get_profile_picture_url }}"
+              alt="{{ doctor.name }}"
+              class="w-24 h-24 rounded-full object-cover border-2 border-slate-100 shadow-sm flex-shrink-0"
+            />
+            <div class="flex-1">
+              <h3 class="font-bold text-xl text-slate-900 leading-tight">
+                <a href="{% url 'doctor_profile' doctor.slug %}" class="hover:text-primary focus:outline-2 focus:outline-primary rounded">
+                  {{ doctor.name }}
+                </a>
+              </h3>
+              <p class="text-primary font-medium text-sm">
+                {{ doctor.designation }}
+              </p>
+              <p class="text-emerald-600 font-semibold text-xs mt-1">
+                {% with doctor.specialties.all|first as sp %} {{ sp.name }} {% endwith %}
+              </p>
+              {% if doctor.avg_rating %}
+              <div class="flex items-center gap-1 mt-2 text-amber-600 font-semibold text-sm" aria-label="{{ doctor.avg_rating|floatformat:1 }} out of 5 stars, {{ doctor.review_count }} reviews">
+                <span aria-hidden="true">&#9733;</span>
+                <span>{{ doctor.avg_rating|default:"0.0"|floatformat:1 }}</span>
+                <span class="text-xs text-slate-500">({{ doctor.review_count }} Reviews)</span>
+              </div>
+              {% endif %}
+            </div>
+          </div>
+          <div class="flex flex-col gap-4 mb-4 border-t border-slate-100 pt-4">
+            <div>
+              <p class="text-xs text-muted uppercase tracking-wide font-bold mb-1" id="edu-label-{{ forloop.counter }}">Education</p>
+              <p class="text-sm text-slate-700 font-medium leading-snug" aria-labelledby="edu-label-{{ forloop.counter }}">
+                {{ doctor.qualifications }}
+              </p>
+            </div>
+            <div>
+              <p class="text-xs text-muted uppercase tracking-wide font-bold mb-1" id="chamber-label-{{ forloop.counter }}">Chamber</p>
+              <p class="text-sm text-slate-700 font-medium" aria-labelledby="chamber-label-{{ forloop.counter }}">
+                {{ doctor.hospital.name|default:"Not listed" }}
+              </p>
+            </div>
+          </div>
+          <div class="mt-auto pt-2">
+            <p class="text-sm text-slate-600 line-clamp-2 mb-3">
+              {{ doctor.about|safe|truncatewords_html:20 }}
+            </p>
+            <a
+              href="{% url 'doctor_profile' doctor.slug %}"
+              class="inline-flex items-center text-primary font-bold hover:underline focus:outline-2 focus:outline-primary rounded text-sm"
+              aria-label="View full profile of {{ doctor.name }}"
+            >
+              View Full Profile
+            </a>
+          </div>
+        </div>
+        {% empty %}
+        <p class="text-slate-500" role="status">No doctors found.</p>
+        {% endfor %}

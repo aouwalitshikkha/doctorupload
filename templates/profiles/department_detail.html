@@ -1,0 +1,220 @@
+{% extends 'base_new.html' %}
+{% load static %}
+{% load humanize %}
+
+{% block seo_head %}
+<title>{{ department.name }} Doctors in Bangladesh — BdDoc24</title>
+<meta name='robots' content='index, follow, max-image-preview:large, max-snippet:-1, max-video-preview:-1' />
+<meta name="description" content="Looking for a {{ department.name }} doctor in Bangladesh? Browse verified {{ department.name }} specialists, their qualifications, and contact information — free." />
+
+<meta property="og:title" content="{{ department.name }} Department — BdDoc24" />
+<meta property="og:description" content="Find doctors in {{ department.name }} department on BdDoc24." />
+<meta property="og:url" content="https://bddoc24.com/department/{{ department.slug }}/" />
+<meta property="og:type" content="website" />
+<meta property="og:image" content="https://bddoc24.com{% static 'images/bddoc24-og-image.jpg' %}" />
+<meta property="og:image:width" content="1200" />
+<meta property="og:image:height" content="630" />
+<meta property="og:image:alt" content="{{ department.name }} Department — BdDoc24" />
+<meta property="og:image:type" content="image/jpg" />
+
+<meta name="twitter:title" content="{{ department.name }} Department — BdDoc24" />
+<meta name="twitter:description" content="Find doctors in {{ department.name }} department on BdDoc24." />
+<meta name="twitter:image" content="https://bddoc24.com{% static 'images/bddoc24-og-image.jpg' %}" />
+<link rel="canonical" href="https://bddoc24.com/department/{{ department.slug }}/" />
+{% endblock seo_head %}
+
+{% block content %}
+<main class="flex-grow pt-16">
+  <section class="py-12 bg-bg">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <nav aria-label="Breadcrumb" class="flex items-center gap-2 text-sm text-muted mb-2">
+        <a href="{% url 'home' %}" class="hover:text-accent transition-colors">Home</a>
+        <i class="fas fa-chevron-right text-xs"></i>
+        <a href="{% url 'department_list' %}" class="hover:text-accent transition-colors">Departments</a>
+        <i class="fas fa-chevron-right text-xs"></i>
+        <span class="text-fg font-medium">{{ department.name }}</span>
+      </nav>
+      <div class="flex flex-col sm:flex-row sm:items-end sm:justify-between gap-2 mb-6">
+        <div>
+          <h1 class="font-display font-bold text-3xl sm:text-4xl text-fg">{{ department.name }}</h1>
+          <p class="text-muted text-lg">{{ total_doctors|intcomma }} doctors found</p>
+        </div>
+      </div>
+
+      {% if department.symptoms %}
+      <div class="bg-white rounded-2xl p-6 shadow-sm mb-8">
+        <h2 class="font-display font-bold text-xl text-fg mb-3 flex items-center gap-2">
+          <i class="fas fa-notes-medical text-accent text-lg"></i>
+          Common Symptoms
+        </h2>
+        <div class="flex flex-wrap gap-2">
+          {% for symptom in department.get_symptoms_list %}
+          <span class="px-3 py-1.5 bg-slate-100 text-slate-700 text-sm rounded-lg">{{ symptom }}</span>
+          {% endfor %}
+        </div>
+      </div>
+      {% endif %}
+
+      {% if specialties %}
+      <div class="mb-10">
+        <h2 class="font-display font-bold text-xl text-fg mb-4 flex items-center gap-2">
+          <i class="fas fa-stethoscope text-accent text-lg"></i>
+          Specialties in {{ department.name }}
+        </h2>
+        <div class="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 gap-3">
+          {% for spec in specialties %}
+          {% with dept=spec.department.first %}
+          <a href="{% if dept.slug %}{% url 'department_detail' dept.slug %}{% else %}#{% endif %}" class="bg-card rounded-xl p-4 shadow-sm card-hover text-center group">
+            <h3 class="font-semibold text-fg text-sm mb-1 group-hover:text-accent transition-colors">{{ spec.name }}</h3>
+            <p class="text-xs text-muted">{{ spec.doctor_count }} doctors</p>
+          </a>
+          {% endwith %}
+          {% endfor %}
+        </div>
+      </div>
+      {% endif %}
+
+      <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
+        {% for doctor in doctors %}
+        <div class="bg-card rounded-2xl overflow-hidden shadow-sm card-hover group flex flex-col">
+          <div class="p-5 flex-1">
+            <div class="flex gap-4">
+              <img loading="lazy" src="{{ doctor.get_profile_picture_url }}" alt="{{ doctor.name }}" class="w-24 h-24 rounded-2xl object-cover flex-shrink-0 shadow-lg ring-2 ring-white">
+              <div class="flex-1 min-w-0">
+                <h2 class="font-display font-semibold text-lg text-fg truncate group-hover:text-accent transition-colors">{{ doctor.name }}</h2>
+                <p class="text-sm text-gray-500 mt-0.5">{{ doctor.designation }}</p>
+                <div class="flex flex-wrap gap-1.5 mt-2">
+                  {% for spec in doctor.specialties.all|slice:":2" %}
+                  <span class="inline-block px-2.5 py-0.5 bg-accent/10 text-accent text-xs font-medium rounded-full">{{ spec.name }}</span>
+                  {% endfor %}
+                </div>
+                {% if doctor.hospital %}
+                <p class="text-muted text-sm mt-2 truncate flex items-center gap-1.5">
+                  <i class="fas fa-hospital text-xs text-accent"></i>
+                  <span class="truncate">{{ doctor.hospital.name }}</span>
+                </p>
+                {% endif %}
+                {% if doctor.avg_rating %}
+                <div class="flex items-center gap-1 mt-2">
+                  <div class="flex">
+                    {% for i in "12345"|make_list %}
+                    <svg class="w-3.5 h-3.5 {% if forloop.counter <= doctor.avg_rating|floatformat:0 %}text-amber-400{% else %}text-slate-300{% endif %}" fill="currentColor" viewBox="0 0 20 20"><path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"/></svg>
+                    {% endfor %}
+                  </div>
+                  <span class="text-sm font-semibold text-fg ml-1">{{ doctor.avg_rating|floatformat:1 }}</span>
+                  <span class="text-sm text-muted">({{ doctor.review_count }})</span>
+                </div>
+                {% endif %}
+              </div>
+            </div>
+          </div>
+          <div class="px-5 py-4 bg-slate-50/80">
+            <div class="flex items-center justify-between">
+              <div class="flex items-center gap-1.5">
+                <i class="fas fa-briefcase text-xs text-muted"></i>
+                <div><p class="text-xs text-muted">Experience</p><p class="font-semibold text-fg text-sm">{{ doctor.experience_years|default:"N/A" }} yrs</p></div>
+              </div>
+              <div class="flex items-center gap-1.5">
+                <i class="fas fa-map-marker-alt text-xs text-accent"></i>
+                <div class="text-right"><p class="text-xs text-muted">Location</p><p class="font-semibold text-accent text-sm">{{ doctor.location.name|default:"N/A" }}</p></div>
+              </div>
+            </div>
+            <a href="{% url 'doctor_profile' doctor.slug %}" class="w-full mt-4 py-3 bg-gradient-to-r from-slate-900 to-slate-700 text-white font-bold rounded-xl border-2 border-slate-600 hover:from-slate-800 hover:to-slate-600 hover:border-slate-500 transition-all shadow-lg shadow-slate-900/20 flex items-center justify-center gap-2 btn-touch text-sm group/btn">
+              <span>View Profile</span>
+              <i class="fas fa-arrow-right text-xs group-hover/btn:translate-x-1 transition-transform"></i>
+            </a>
+          </div>
+        </div>
+        {% empty %}
+        <div class="col-span-full text-center py-16">
+          <div class="w-20 h-20 mx-auto mb-4 rounded-full bg-slate-100 flex items-center justify-center">
+            <i class="fas fa-user-md text-3xl text-slate-400"></i>
+          </div>
+          <p class="text-muted text-lg mb-2">No doctors found</p>
+          <p class="text-sm text-slate-400 mb-4">No doctors are currently listed in this department.</p>
+          <a href="{% url 'doctor_list' %}" class="inline-block px-6 py-2.5 bg-accent text-white font-semibold rounded-lg hover:opacity-90 transition-all">Browse All Doctors</a>
+        </div>
+        {% endfor %}
+      </div>
+
+      <div class="mt-16 max-w-4xl mx-auto">
+        <h2 class="font-display font-bold text-2xl text-fg mb-6 flex items-center gap-3">
+          <div class="w-10 h-10 rounded-xl bg-gradient-to-br from-accent to-cyan-600 flex items-center justify-center text-white">
+            <i class="fas fa-question-circle"></i>
+          </div>
+          Frequently Asked Questions about {{ department.name }}
+        </h2>
+
+        <div class="space-y-3">
+          <details class="group bg-white rounded-xl shadow-sm overflow-hidden">
+            <summary class="flex items-center gap-3 p-4 cursor-pointer hover:bg-slate-50 transition-colors">
+              <div class="w-8 h-8 rounded-lg bg-accent/10 flex items-center justify-center text-accent flex-shrink-0">
+                <i class="fas fa-info-circle"></i>
+              </div>
+              <span class="font-medium text-fg">What is {{ department.name }}?</span>
+              <i class="fas fa-chevron-down ml-auto text-slate-400 group-open:rotate-180 transition-transform"></i>
+            </summary>
+            <div class="px-4 pb-4 pl-16 text-muted leading-relaxed">
+              {{ department.name }} is a medical department that deals with the diagnosis, treatment, and management of conditions related to this specialty area. Doctors in this department have specialized training and expertise to provide comprehensive care for patients.
+            </div>
+          </details>
+
+          <details class="group bg-white rounded-xl shadow-sm overflow-hidden">
+            <summary class="flex items-center gap-3 p-4 cursor-pointer hover:bg-slate-50 transition-colors">
+              <div class="w-8 h-8 rounded-lg bg-accent/10 flex items-center justify-center text-accent flex-shrink-0">
+                <i class="fas fa-notes-medical"></i>
+              </div>
+              <span class="font-medium text-fg">What symptoms should I look for?</span>
+              <i class="fas fa-chevron-down ml-auto text-slate-400 group-open:rotate-180 transition-transform"></i>
+            </summary>
+            <div class="px-4 pb-4 pl-16 text-muted leading-relaxed">
+              Common symptoms associated with {{ department.name }} include:
+              {% if department.get_symptoms_list %}
+              <span class="font-medium text-fg">{{ department.get_symptoms_list|join:", " }}</span>.
+              {% endif %}
+              If you are experiencing any of these symptoms, consider consulting a specialist in this department.
+            </div>
+          </details>
+
+          <details class="group bg-white rounded-xl shadow-sm overflow-hidden">
+            <summary class="flex items-center gap-3 p-4 cursor-pointer hover:bg-slate-50 transition-colors">
+              <div class="w-8 h-8 rounded-lg bg-accent/10 flex items-center justify-center text-accent flex-shrink-0">
+                <i class="fas fa-user-md"></i>
+              </div>
+              <span class="font-medium text-fg">How do I find the right doctor in {{ department.name }}?</span>
+              <i class="fas fa-chevron-down ml-auto text-slate-400 group-open:rotate-180 transition-transform"></i>
+            </summary>
+            <div class="px-4 pb-4 pl-16 text-muted leading-relaxed">
+              Browse the list of doctors above to find specialists in {{ department.name }}. You can filter by location, check their qualifications, experience, and patient reviews to choose the right doctor for your needs. Each doctor's profile includes their chamber details and contact information for booking appointments.
+            </div>
+          </details>
+
+          <details class="group bg-white rounded-xl shadow-sm overflow-hidden">
+            <summary class="flex items-center gap-3 p-4 cursor-pointer hover:bg-slate-50 transition-colors">
+              <div class="w-8 h-8 rounded-lg bg-accent/10 flex items-center justify-center text-accent flex-shrink-0">
+                <i class="fas fa-building"></i>
+              </div>
+              <span class="font-medium text-fg">What specialties are part of {{ department.name }}?</span>
+              <i class="fas fa-chevron-down ml-auto text-slate-400 group-open:rotate-180 transition-transform"></i>
+            </summary>
+            <div class="px-4 pb-4 pl-16 text-muted leading-relaxed">
+              {% if specialties %}
+              {{ department.name }} includes specialties such as {% for spec in specialties %}{{ spec.name }}{% if not forloop.last %}, {% endif %}{% endfor %}. Each specialty focuses on specific conditions and treatments within the department.
+              {% else %}
+              Various specialized areas of practice are covered under {{ department.name }}.
+              {% endif %}
+            </div>
+          </details>
+        </div>
+      </div>
+
+      <div class="mt-16 text-center">
+        <div class="flex flex-wrap justify-center gap-3">
+          <a href="{% url 'department_list' %}" class="px-5 py-2.5 bg-white shadow-sm text-fg font-semibold rounded-lg hover:bg-gray-50 transition-all text-sm">All Departments</a>
+          <a href="{% url 'doctor_list' %}" class="px-5 py-2.5 bg-accent text-white font-semibold rounded-lg hover:opacity-90 transition-all text-sm">Browse All Doctors</a>
+        </div>
+      </div>
+    </div>
+  </section>
+</main>
+{% endblock content %}

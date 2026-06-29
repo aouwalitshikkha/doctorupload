@@ -1,0 +1,561 @@
+{% extends "base_new.html" %}
+{% load static %}
+
+{% block seo_head %}
+<title>About BdDoc24 — Find Doctors & Hospitals in Bangladesh</title>
+<meta name='robots' content='index, follow, max-image-preview:large, max-snippet:-1, max-video-preview:-1' />
+<meta name="description" content="Learn about BdDoc24, a trusted platform helping people find verified doctors, hospitals, and chambers across Bangladesh." />
+
+<!-- Open Graph Meta Datas -->
+<meta property="og:title" content="About BdDoc24 — Find Doctors & Hospitals in Bangladesh" />
+<meta property="og:description" content="Learn about BdDoc24, a trusted platform helping people find verified doctors, hospitals, and chambers across Bangladesh." />
+<meta property="og:url" content="https://bddoc24.com/about/" />
+<meta property="og:type" content="website" />
+<meta property="og:image" content="https://bddoc24.com{% static 'images/bddoc24-og-image.jpg' %}" />
+<meta property="og:image:width" content="1200" />
+<meta property="og:image:height" content="630" />
+<meta property="og:image:alt" content="About BdDoc24 - Find Doctors & Hospitals in Bangladesh" />
+<meta property="og:image:type" content="image/jpg" />
+
+<!-- Twitter Datas -->
+<meta name="twitter:title" content="About BdDoc24 — Find Doctors & Hospitals in Bangladesh" />
+<meta name="twitter:description" content="Learn about BdDoc24, a trusted platform helping people find verified doctors, hospitals, and chambers across Bangladesh." />
+<meta name="twitter:image" content="https://bddoc24.com{% static 'images/bddoc24-og-image.jpg' %}" />
+<link rel="canonical" href="https://bddoc24.com/about/" />
+
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@graph": [
+    {
+      "@type": "Organization",
+      "@id": "https://bddoc24.com/#organization",
+      "name": "BdDoc24",
+      "url": "https://bddoc24.com/",
+      "description": "BdDoc24 is a healthcare platform that helps users find verified doctors, hospitals, and chambers across Bangladesh.",
+      "areaServed": { "@type": "Country", "name": "Bangladesh" }
+    },
+    {
+      "@type": "WebSite",
+      "@id": "https://bddoc24.com/#website",
+      "url": "https://bddoc24.com/",
+      "name": "BdDoc24 - Doctor & Hospital Directory"
+    },
+    {
+      "@type": "AboutPage",
+      "@id": "https://bddoc24.com/about/#about",
+      "url": "https://bddoc24.com/about/",
+      "name": "About BdDoc24",
+      "description": "Learn about BdDoc24 and the team behind the platform helping millions find healthcare services.",
+      "about": [
+        { "@id": "https://bddoc24.com/#person-abdul-aouwal" },
+        { "@id": "https://bddoc24.com/#person-meher-nigar" },
+        { "@id": "https://bddoc24.com/#person-nazir-ahmed" }
+      ]
+    },
+    {
+      "@type": "Person",
+      "@id": "https://bddoc24.com/#person-abdul-aouwal",
+      "name": "Abdul Aouwal",
+      "jobTitle": "Search Systems Consultant",
+      "image": "https://bddoc24.com/static/images/abdul-aouwal.webp",
+      "sameAs": [
+        "https://www.linkedin.com/in/aouwalitshikkha/",
+        "https://www.facebook.com/itshikkha",
+        "https://github.com/aouwalitshikkha"
+      ]
+    },
+    {
+      "@type": "Person",
+      "@id": "https://bddoc24.com/#person-meher-nigar",
+      "name": "Meher Nigar",
+      "jobTitle": "Educational Blogger",
+      "image": "https://bddoc24.com/static/images/nigar.webp",
+      "sameAs": [
+        "https://www.linkedin.com/in/mehernigarcu/",
+        "https://www.facebook.com/mehernigarcu",
+        "https://github.com/meher09"
+      ]
+    },
+    {
+      "@type": "Person",
+      "@id": "https://bddoc24.com/#person-nazir-ahmed",
+      "name": "Nazir Ahmed",
+      "jobTitle": "Chief Technology Officer",
+      "image": "https://bddoc24.com/static/images/nabeen.jpg",
+      "sameAs": [
+        "https://www.facebook.com/nazir.nabeen",
+        "https://github.com/ahmednabeen/"
+      ]
+    }
+  ]
+}
+</script>
+
+{% endblock %}
+
+{% block extra_css %}{% endblock extra_css %}
+
+{% block content %}
+<main class="flex-grow pt-16">
+  <!-- 1. Hero Section -->
+  <section class="relative bg-white pt-16 pb-20 lg:pt-24 lg:pb-28">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
+      <span
+        class="inline-block py-1 px-3 rounded-full bg-blue-100 text-primary-700 text-sm font-semibold mb-6"
+      >
+        Healthcare Made Simple
+      </span>
+      <h1
+        class="font-display font-bold text-4xl sm:text-5xl lg:text-6xl text-slate-900 leading-tight mb-6"
+      >
+        About
+        <span
+          class="text-transparent bg-clip-text bg-gradient-to-r from-primary to-accent"
+          >BDDOC 24</span
+        >
+      </h1>
+      <p
+        class="text-lg sm:text-xl text-slate-600 max-w-3xl mx-auto leading-relaxed mb-8"
+      >
+      BdDoc24 aims to be one of the most comprehensive doctor directories in Bangladesh.
+      </p>
+
+      <div class="flex flex-col sm:flex-row justify-center gap-4">
+        <a
+          href="#team"
+          class="px-8 py-3.5 bg-primary text-white font-semibold rounded-lg hover:bg-primary-800 transition-colors shadow-lg"
+        >
+          Meet the Team
+        </a>
+        <a
+          href="{% url 'contact_us' %}"
+          class="px-8 py-3.5 bg-white text-primary border border-slate-200 font-semibold rounded-lg hover:bg-slate-50 transition-colors shadow-sm"
+        >
+          Contact Us
+        </a>
+      </div>
+    </div>
+  </section>
+
+  <!-- 2. Our Story Section -->
+  <section class="py-16 lg:py-24 bg-bg border-y border-border">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div
+        class="grid grid-cols-1 lg:grid-cols-2 gap-12 lg:gap-16 items-center"
+      >
+        <!-- Image Column -->
+        <div class="relative">
+          <img loading="lazy"             src="{% static 'images/doctor-patient-consultation.jpg' %}"
+            alt="A doctor consulting with a patient"
+            class="rounded-2xl shadow-lg w-full h-80 sm:h-96 object-cover border-4 border-white"
+          />
+        </div>
+
+        <!-- Content Column -->
+        <div>
+          <h2 class="font-display font-bold text-3xl sm:text-4xl text-fg mb-6">
+            Born From a Personal Struggle
+          </h2>
+          <div class="prose prose-lg text-muted leading-relaxed">
+            <p class="mb-4">
+              BdDoc24 was born from a simple yet powerful realization: finding
+              the right doctor in Bangladesh shouldn't be a challenge. Our
+              founders experienced firsthand the frustration of navigating
+              fragmented healthcare information and unreliable referrals during
+              a medical emergency.
+            </p>
+            <p>
+              What started as a personal quest has evolved into a platform built
+              on the pillars of <strong class="text-fg">transparency</strong>,
+              <strong class="text-fg">verification</strong>, and
+              <strong class="text-fg">accessibility</strong>. We are dedicated
+              to bridging the gap between patients and healthcare professionals,
+              connecting millions of Bangladeshis to the care they deserve.
+            </p>
+          </div>
+
+          <div class="mt-8 flex items-center gap-4">
+            <div class="flex -space-x-2">
+              <img loading="lazy"                 class="w-10 h-10 rounded-full border-2 border-white"
+                src="{% static 'images/abdul-aouwal.webp' %}"
+                alt="Abdul Aouwal CEO of BDDoc24"
+              />
+              <img loading="lazy"                 class="w-10 h-10 rounded-full border-2 border-white"
+                src="{% static 'images/nigar.webp' %}"
+                alt="Nigar CTO of BDDoc24"
+              />
+              <img loading="lazy"                 class="w-10 h-10 rounded-full border-2 border-white"
+                src="{% static 'images/nabeen.jpg' %}"
+                alt="Nabeen Team Member of BDDoc24"
+              />
+            </div>
+            <p class="text-sm text-muted font-medium">
+              Trusted by 10,000+ happy patients
+            </p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- 3. Mission & Vision Section -->
+  <section class="py-16 lg:py-24 bg-white">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div class="text-center mb-12">
+        <h2 class="font-display font-bold text-3xl sm:text-4xl text-fg mb-4">
+          Our Purpose
+        </h2>
+        <div class="w-20 h-1 bg-accent mx-auto rounded-full"></div>
+      </div>
+
+      <div class="grid grid-cols-1 md:grid-cols-2 gap-8 max-w-5xl mx-auto">
+        <!-- Mission Card -->
+        <div class="bg-slate-50 rounded-2xl p-8 border border-slate-100">
+          <div
+            class="w-16 h-16 mb-6 rounded-2xl bg-blue-100 text-primary flex items-center justify-center"
+          >
+            <svg
+              class="w-8 h-8"
+              fill="none"
+              stroke="currentColor"
+              viewBox="0 0 24 24"
+            >
+              <path
+                stroke-linecap="round"
+                stroke-linejoin="round"
+                stroke-width="1.5"
+                d="M13 10V3L4 14h7v7l9-11h-7z"
+              ></path>
+            </svg>
+          </div>
+          <h3 class="font-display text-2xl font-bold text-fg mb-3">
+            Our Mission
+          </h3>
+          <p class="text-muted leading-relaxed">
+            Help every person in Bangladesh choose the right healthcare by
+            offering a complete, trusted, and easy to use doctor directory that
+            removes confusion from finding the right doctor
+          </p>
+        </div>
+
+        <!-- Vision Card -->
+        <div class="bg-slate-50 rounded-2xl p-8 border border-slate-100">
+          <div
+            class="w-16 h-16 mb-6 rounded-2xl bg-emerald-100 text-emerald-700 flex items-center justify-center"
+          >
+            <svg
+              class="w-8 h-8"
+              fill="none"
+              stroke="currentColor"
+              viewBox="0 0 24 24"
+            >
+              <path
+                stroke-linecap="round"
+                stroke-linejoin="round"
+                stroke-width="1.5"
+                d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"
+              ></path>
+              <path
+                stroke-linecap="round"
+                stroke-linejoin="round"
+                stroke-width="1.5"
+                d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z"
+              ></path>
+            </svg>
+          </div>
+          <h3 class="font-display text-2xl font-bold text-fg mb-3">
+            Our Vision
+          </h3>
+          <p class="text-muted leading-relaxed">
+            To become the most trusted and indispensable digital health resource
+            in Bangladesh, fostering a healthier nation by seamlessly connecting
+            patients with the right care at the right time.
+          </p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- 6. Data Accuracy Section -->
+  <section class="py-12 bg-white border-t border-border">
+    <div class="max-w-4xl mx-auto px-4 text-center">
+      <h2 class="font-display font-bold text-2xl sm:text-3xl text-fg mb-4">
+        How We Ensure Accurate Information
+      </h2>
+
+      <p class="text-muted text-lg leading-relaxed mb-6">
+        BdDoc24 compiles doctor listings from trusted sources such as hospital
+        websites, publicly available medical records (such as BMDC listings). Each
+        listing is reviewed to reduce errors and keep information consistent.
+      </p>
+
+      <p class="text-muted text-lg leading-relaxed mb-6">
+        We regularly update data and allow users to report inaccuracies. While
+        we strive for accuracy, we recommend confirming important details
+        directly with the healthcare provider.
+      </p>
+
+      <div class="flex justify-center gap-4">
+        <a
+          href="{% url 'verification_policy' %}"
+          class="text-primary font-semibold hover:underline"
+        >
+          Verification Policy
+        </a>
+        <a
+          href="{% url 'editorial_policy' %}"
+          class="text-primary font-semibold hover:underline"
+        >
+          Editorial Policy
+        </a>
+      </div>
+    </div>
+  </section>
+
+  <!-- 5. Team Section -->
+  <section id="team" class="py-16 lg:py-24 bg-bg">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div class="text-center mb-12">
+        <h2 class="font-display font-bold text-3xl sm:text-4xl text-fg mb-2">
+          Meet Our Leadership
+        </h2>
+        <p class="text-muted text-lg">
+          The dedicated minds working tirelessly behind the scenes.
+        </p>
+      </div>
+
+      <!-- ✅ Changed to 3 columns -->
+      <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8">
+        <!-- Team Member 1 -->
+        <div class="text-center">
+          <div
+            class="w-40 h-40 mx-auto mb-6 overflow-hidden rounded-full border-4 border-white shadow-lg"
+          >
+            <img loading="lazy"               src="{% static 'images/abdul-aouwal.webp' %}"
+              alt="Abdul Aouwal"
+              class="w-full h-full object-cover"
+            />
+          </div>
+          <h3 class="font-display font-bold text-xl text-fg">Abdul Aouwal</h3>
+          <p class="text-primary font-semibold mb-3">
+            Search Systems Consultant
+          </p>
+          <div class="flex justify-center gap-4 mt-3">
+            <!-- LinkedIn -->
+            <a
+              href="https://www.linkedin.com/in/aouwalitshikkha/"
+              target="_blank"
+              aria-label="LinkedIn profile (opens in new window)"
+              class="text-muted hover:text-blue-600 transition"
+            >
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                class="w-5 h-5"
+                fill="currentColor"
+                viewBox="0 0 24 24"
+              >
+                <path
+                  d="M4.98 3.5C4.98 4.88 3.87 6 2.5 6S0 4.88 0 3.5 1.12 1 2.5 1s2.48 1.12 2.48 2.5zM.22 8h4.56v12H.22V8zM8.34 8h4.37v1.64h.06c.61-1.15 2.1-2.37 4.32-2.37 4.62 0 5.47 3.04 5.47 6.99V20h-4.56v-5.58c0-1.33-.02-3.05-1.86-3.05-1.87 0-2.16 1.46-2.16 2.96V20H8.34V8z"
+                />
+              </svg>
+            </a>
+
+            <!-- Facebook -->
+            <a
+              href="https://www.facebook.com/itshikkha"
+              target="_blank"
+              aria-label="Facebook profile (opens in new window)"
+              class="text-muted hover:text-blue-500 transition"
+            >
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                class="w-5 h-5"
+                fill="currentColor"
+                viewBox="0 0 24 24"
+              >
+                <path
+                  d="M22 12a10 10 0 1 0-11.5 9.88v-6.99H7.9V12h2.6V9.8c0-2.57 1.54-3.99 3.89-3.99 1.13 0 2.31.2 2.31.2v2.54h-1.3c-1.28 0-1.68.8-1.68 1.62V12h2.86l-.46 2.89h-2.4v6.99A10 10 0 0 0 22 12z"
+                />
+              </svg>
+            </a>
+
+            <!-- GitHub -->
+            <a
+              href="https://github.com/aouwalitshikkha"
+              target="_blank"
+              aria-label="GitHub profile (opens in new window)"
+              class="text-muted hover:text-black transition"
+            >
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                class="w-5 h-5"
+                fill="currentColor"
+                viewBox="0 0 24 24"
+              >
+                <path
+                  d="M12 .5C5.65.5.5 5.65.5 12a11.5 11.5 0 0 0 7.86 10.94c.58.1.79-.25.79-.56v-2.17c-3.2.7-3.88-1.54-3.88-1.54-.52-1.33-1.28-1.68-1.28-1.68-1.05-.72.08-.7.08-.7 1.16.08 1.77 1.2 1.77 1.2 1.03 1.76 2.7 1.25 3.36.96.1-.75.4-1.25.72-1.54-2.55-.29-5.23-1.27-5.23-5.66 0-1.25.45-2.28 1.2-3.08-.12-.3-.52-1.52.12-3.17 0 0 .97-.31 3.18 1.18a11.1 11.1 0 0 1 5.8 0c2.2-1.5 3.17-1.18 3.17-1.18.65 1.65.25 2.87.13 3.17.75.8 1.2 1.83 1.2 3.08 0 4.4-2.69 5.37-5.25 5.65.42.36.78 1.08.78 2.18v3.23c0 .31.2.67.8.56A11.5 11.5 0 0 0 23.5 12C23.5 5.65 18.35.5 12 .5z"
+                />
+              </svg>
+            </a>
+          </div>
+        </div>
+
+        <!-- Team Member 2 -->
+        <div class="text-center">
+          <div
+            class="w-40 h-40 mx-auto mb-6 overflow-hidden rounded-full border-4 border-white shadow-lg"
+          >
+            <img loading="lazy"               src="{% static 'images/nigar.webp' %}"
+              alt="Meher Nigar"
+              class="w-full h-full object-cover"
+            />
+          </div>
+          <h3 class="font-display font-bold text-xl text-fg">Meher Nigar</h3>
+          <p class="text-primary font-semibold mb-3">Educational Blogger</p>
+          <div class="flex justify-center gap-4 mt-3">
+            <!-- LinkedIn -->
+            <a
+              href="https://www.linkedin.com/in/mehernigarcu/"
+              target="_blank"
+              aria-label="LinkedIn profile (opens in new window)"
+              class="text-muted hover:text-blue-600 transition"
+            >
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                class="w-5 h-5"
+                fill="currentColor"
+                viewBox="0 0 24 24"
+              >
+                <path
+                  d="M4.98 3.5C4.98 4.88 3.87 6 2.5 6S0 4.88 0 3.5 1.12 1 2.5 1s2.48 1.12 2.48 2.5zM.22 8h4.56v12H.22V8zM8.34 8h4.37v1.64h.06c.61-1.15 2.1-2.37 4.32-2.37 4.62 0 5.47 3.04 5.47 6.99V20h-4.56v-5.58c0-1.33-.02-3.05-1.86-3.05-1.87 0-2.16 1.46-2.16 2.96V20H8.34V8z"
+                />
+              </svg>
+            </a>
+
+            <!-- Facebook -->
+            <a
+              href="https://www.facebook.com/mehernigarcu"
+              target="_blank"
+              aria-label="Facebook profile (opens in new window)"
+              class="text-muted hover:text-blue-500 transition"
+            >
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                class="w-5 h-5"
+                fill="currentColor"
+                viewBox="0 0 24 24"
+              >
+                <path
+                  d="M22 12a10 10 0 1 0-11.5 9.88v-6.99H7.9V12h2.6V9.8c0-2.57 1.54-3.99 3.89-3.99 1.13 0 2.31.2 2.31.2v2.54h-1.3c-1.28 0-1.68.8-1.68 1.62V12h2.86l-.46 2.89h-2.4v6.99A10 10 0 0 0 22 12z"
+                />
+              </svg>
+            </a>
+
+            <!-- GitHub -->
+            <a
+              href="https://github.com/meher09"
+              target="_blank"
+              aria-label="GitHub profile (opens in new window)"
+              class="text-muted hover:text-black transition"
+            >
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                class="w-5 h-5"
+                fill="currentColor"
+                viewBox="0 0 24 24"
+              >
+                <path
+                  d="M12 .5C5.65.5.5 5.65.5 12a11.5 11.5 0 0 0 7.86 10.94c.58.1.79-.25.79-.56v-2.17c-3.2.7-3.88-1.54-3.88-1.54-.52-1.33-1.28-1.68-1.28-1.68-1.05-.72.08-.7.08-.7 1.16.08 1.77 1.2 1.77 1.2 1.03 1.76 2.7 1.25 3.36.96.1-.75.4-1.25.72-1.54-2.55-.29-5.23-1.27-5.23-5.66 0-1.25.45-2.28 1.2-3.08-.12-.3-.52-1.52.12-3.17 0 0 .97-.31 3.18 1.18a11.1 11.1 0 0 1 5.8 0c2.2-1.5 3.17-1.18 3.17-1.18.65 1.65.25 2.87.13 3.17.75.8 1.2 1.83 1.2 3.08 0 4.4-2.69 5.37-5.25 5.65.42.36.78 1.08.78 2.18v3.23c0 .31.2.67.8.56A11.5 11.5 0 0 0 23.5 12C23.5 5.65 18.35.5 12 .5z"
+                />
+              </svg>
+            </a>
+          </div>
+        </div>
+
+        <!-- Team Member 3 -->
+        <div class="text-center">
+          <div
+            class="w-40 h-40 mx-auto mb-6 overflow-hidden rounded-full border-4 border-white shadow-lg"
+          >
+            <img loading="lazy"               src="{% static 'images/nabeen.jpg' %}"
+              alt="Nazir Ahmed"
+              class="w-full h-full object-cover"
+            />
+          </div>
+          <h3 class="font-display font-bold text-xl text-fg">Nazir Ahmed</h3>
+          <p class="text-primary font-semibold mb-3">
+            Chief Technologist
+          </p>
+          <div class="flex justify-center gap-4 mt-3">
+            <!-- Facebook -->
+            <a
+              href="https://www.facebook.com/nazir.nabeen"
+              target="_blank"
+              aria-label="Facebook profile (opens in new window)"
+              class="text-muted hover:text-blue-500 transition"
+            >
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                class="w-5 h-5"
+                fill="currentColor"
+                viewBox="0 0 24 24"
+              >
+                <path
+                  d="M22 12a10 10 0 1 0-11.5 9.88v-6.99H7.9V12h2.6V9.8c0-2.57 1.54-3.99 3.89-3.99 1.13 0 2.31.2 2.31.2v2.54h-1.3c-1.28 0-1.68.8-1.68 1.62V12h2.86l-.46 2.89h-2.4v6.99A10 10 0 0 0 22 12z"
+                />
+              </svg>
+            </a>
+
+            <!-- GitHub -->
+            <a
+              href="https://github.com/ahmednabeen/"
+              target="_blank"
+              aria-label="GitHub profile (opens in new window)"
+              class="text-muted hover:text-black transition"
+            >
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                class="w-5 h-5"
+                fill="currentColor"
+                viewBox="0 0 24 24"
+              >
+                <path
+                  d="M12 .5C5.65.5.5 5.65.5 12a11.5 11.5 0 0 0 7.86 10.94c.58.1.79-.25.79-.56v-2.17c-3.2.7-3.88-1.54-3.88-1.54-.52-1.33-1.28-1.68-1.28-1.68-1.05-.72.08-.7.08-.7 1.16.08 1.77 1.2 1.77 1.2 1.03 1.76 2.7 1.25 3.36.96.1-.75.4-1.25.72-1.54-2.55-.29-5.23-1.27-5.23-5.66 0-1.25.45-2.28 1.2-3.08-.12-.3-.52-1.52.12-3.17 0 0 .97-.31 3.18 1.18a11.1 11.1 0 0 1 5.8 0c2.2-1.5 3.17-1.18 3.17-1.18.65 1.65.25 2.87.13 3.17.75.8 1.2 1.83 1.2 3.08 0 4.4-2.69 5.37-5.25 5.65.42.36.78 1.08.78 2.18v3.23c0 .31.2.67.8.56A11.5 11.5 0 0 0 23.5 12C23.5 5.65 18.35.5 12 .5z"
+                />
+              </svg>
+            </a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- CTA Section -->
+  <section class="py-16 bg-slate-50 border-t border-border">
+    <div class="max-w-4xl mx-auto px-4 text-center">
+      <h2 class="font-display font-bold text-3xl text-fg mb-6">
+        Ready to join our mission?
+      </h2>
+      <p class="text-lg text-muted mb-8">
+        Whether you are a doctor wanting to expand your reach or a patient
+        seeking the best care, BdDoc24 is here for you.
+      </p>
+      <div class="flex flex-col sm:flex-row justify-center gap-4">
+        <a
+          href="{% url 'contact_us' %}"
+          class="px-8 py-3 bg-gradient-to-r from-accent to-cyan-600 text-white font-semibold rounded-xl hover:from-cyan-600 hover:to-accent transition-all shadow-md"
+        >
+          Join as Doctor
+        </a>
+        <a
+          href="{% url 'doctor_list' %}"
+          class="px-8 py-3 bg-gradient-to-r from-accent to-cyan-600 text-white font-semibold rounded-xl hover:from-cyan-600 hover:to-accent transition-all shadow-md"
+        >
+          Find a Doctor
+        </a>
+      </div>
+    </div>
+  </section>
+</main>
+{% endblock content %}

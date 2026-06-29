@@ -1,0 +1,219 @@
+{% extends "base_new.html" %}
+{% load static %}
+{% load humanize %}
+
+{% block seo_head %}
+  <meta name="robots" content="index, follow, max-image-preview:large" />
+  <link rel="canonical" href="https://bddoc24.com/top-doctors/{% if department_display %}?department={{ department_display }}{% endif %}{% if location_display and location_display != 'All Locations' %}{% if department_display %}&{% else %}?{% endif %}location={{ location_display }}{% endif %}">
+
+  {% if department_display and location_display != "All Locations" %}
+    <title>Top {{ count }} {{ department_display }} Doctors in {{ location_display }} - BdDoc24</title>
+    <meta name="description" content="Find the best {{ department_display }} doctors in {{ location_display }}. Browse top-rated {{ department_display }} specialists with the best patient reviews on BdDoc24." />
+    <meta property="og:title" content="Top {{ count }} {{ department_display }} Doctors in {{ location_display }} - BdDoc24" />
+    <meta property="og:description" content="Find the best {{ department_display }} doctors in {{ location_display }} on BdDoc24." />
+  {% elif department_display %}
+    <title>Top {{ count }} {{ department_display }} Doctors in Bangladesh - BdDoc24</title>
+    <meta name="description" content="Find the best {{ department_display }} doctors in Bangladesh. Browse top-rated {{ department_display }} specialists across all locations on BdDoc24." />
+    <meta property="og:title" content="Top {{ count }} {{ department_display }} Doctors in Bangladesh - BdDoc24" />
+    <meta property="og:description" content="Find the best {{ department_display }} doctors across Bangladesh on BdDoc24." />
+  {% elif location_display != "All Locations" %}
+    <title>Top {{ count }} Doctors in {{ location_display }} - BdDoc24</title>
+    <meta name="description" content="Find the top-rated doctors in {{ location_display }}. Browse the best doctors with the most patient reviews on BdDoc24." />
+    <meta property="og:title" content="Top {{ count }} Doctors in {{ location_display }} - BdDoc24" />
+    <meta property="og:description" content="Find the top-rated doctors in {{ location_display }} on BdDoc24." />
+  {% else %}
+    <title>Top {{ count }} Best Doctors in Bangladesh - BdDoc24</title>
+    <meta name="description" content="Find the top-rated doctors in Bangladesh. Browse the best doctors across all specialties and locations on BdDoc24." />
+    <meta property="og:title" content="Top {{ count }} Best Doctors in Bangladesh - BdDoc24" />
+    <meta property="og:description" content="Find the top-rated doctors in Bangladesh on BdDoc24." />
+  {% endif %}
+
+  <meta property="og:type" content="website" />
+  <meta property="og:url" content="https://bddoc24.com/top-doctors/">
+  <meta property="og:image" content="https://bddoc24.com{% static 'images/bddoc24-og-image.jpg' %}" />
+  <meta property="og:image:width" content="1200" />
+  <meta property="og:image:height" content="630" />
+  <meta property="og:image:alt" content="Top Doctors — BdDoc24" />
+  <meta property="og:image:type" content="image/jpg" />
+  <meta name="twitter:title" content="Top Doctors - BdDoc24" />
+  {% if department_display and location_display != "All Locations" %}
+  <meta name="twitter:description" content="Find the best {{ department_display }} doctors in {{ location_display }} on BdDoc24." />
+  {% elif department_display %}
+  <meta name="twitter:description" content="Find the best {{ department_display }} doctors in Bangladesh on BdDoc24." />
+  {% elif location_display != "All Locations" %}
+  <meta name="twitter:description" content="Find the top-rated doctors in {{ location_display }} on BdDoc24." />
+  {% else %}
+  <meta name="twitter:description" content="Find the top-rated doctors in Bangladesh on BdDoc24." />
+  {% endif %}
+  <meta name="twitter:image" content="https://bddoc24.com{% static 'images/bddoc24-og-image.jpg' %}" />
+{% endblock seo_head %}
+
+{% block extra_css %}{% endblock extra_css %}
+
+{% block content %}
+<main class="flex-grow pt-16">
+  <section class="py-12 bg-bg">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <!-- Header -->
+      <div class="mb-8">
+        {% if department_display and location_display != "All Locations" %}
+        <h1 class="font-display font-bold text-3xl sm:text-4xl text-fg mb-2">
+          Top {{ count }} {{ department_display }} Doctors in {{ location_display }}
+        </h1>
+        <p class="text-muted text-lg">
+          Best {{ department_display }} specialists for patient care in {{ location_display }}
+        </p>
+        {% elif department_display %}
+        <h1 class="font-display font-bold text-3xl sm:text-4xl text-fg mb-2">
+          Top {{ count }} {{ department_display }} Doctors in Bangladesh
+        </h1>
+        <p class="text-muted text-lg">
+          Best {{ department_display }} doctors across all locations in Bangladesh
+        </p>
+        {% elif location_display != "All Locations" %}
+        <h1 class="font-display font-bold text-3xl sm:text-4xl text-fg mb-2">
+          Top {{ count }} Doctors in {{ location_display }}
+        </h1>
+        <p class="text-muted text-lg">
+          Best rated doctors in {{ location_display }} with top patient reviews
+        </p>
+        {% else %}
+        <h1 class="font-display font-bold text-3xl sm:text-4xl text-fg mb-2">
+          Top {{ count }} Best Doctors in Bangladesh
+        </h1>
+        <p class="text-muted text-lg">
+          Best rated doctors across all specialties and locations
+        </p>
+        {% endif %}
+      </div>
+
+      <!-- Filter Form -->
+      <form method="get" class="flex flex-wrap sm:flex-nowrap gap-2 sm:gap-3 mb-6 sm:mb-8 bg-card p-3 sm:p-4 rounded-xl border border-border items-center">
+        <div class="min-w-[120px] sm:min-w-[150px] w-full sm:w-auto">
+          <label for="top-doctor-specialty" class="sr-only">Filter by specialty</label>
+          <select id="top-doctor-specialty" name="specialty" class="w-full px-3 sm:px-4 py-2.5 rounded-lg bg-bg border border-border text-fg appearance-none cursor-pointer focus:outline-none focus:border-accent text-base btn-touch">
+            <option value="">All Specialties</option>
+            {% for spec in all_specialties %}
+              <option value="{{ spec.slug }}" {% if department_slug == spec.slug %}selected{% endif %}>{{ spec.name }}</option>
+            {% endfor %}
+          </select>
+        </div>
+        <div class="min-w-[120px] sm:min-w-[150px] w-full sm:w-auto">
+          <label for="top-doctor-location" class="sr-only">Filter by location</label>
+          <select id="top-doctor-location" name="location" class="w-full px-3 sm:px-4 py-2.5 rounded-lg bg-bg border border-border text-fg appearance-none cursor-pointer focus:outline-none focus:border-accent text-base btn-touch">
+            <option value="">All Locations</option>
+            {% for loc in all_locations %}
+              <option value="{{ loc.slug }}" {% if location_slug == loc.slug %}selected{% endif %}>{{ loc.name }}</option>
+            {% endfor %}
+          </select>
+        </div>
+        <div class="min-w-[100px] sm:min-w-[120px] w-full sm:w-auto">
+          <label for="top-doctor-count" class="sr-only">Number of results</label>
+          <input id="top-doctor-count" type="number" name="count" value="{{ count }}" min="1" max="50" placeholder="Count" class="w-full px-3 sm:px-4 py-2.5 rounded-lg bg-bg border border-border text-fg placeholder:text-muted focus:outline-none focus:border-accent text-base">
+        </div>
+        <div class="flex gap-2 w-full sm:w-auto">
+          <button type="submit" class="flex-1 sm:flex-none px-4 sm:px-5 py-2.5 bg-accent text-slate-900 font-semibold rounded-lg hover:opacity-90 transition-all btn-touch">
+            Search
+          </button>
+          {% if department_slug or location_slug %}
+          <a href="{% url 'doctor_list' %}" class="flex-1 sm:flex-none px-4 sm:px-5 py-2.5 border border-border text-fg font-semibold rounded-lg hover:bg-gray-50 transition-all btn-touch text-center text-sm">
+            Clear
+          </a>
+          {% endif %}
+        </div>
+      </form>
+
+      <!-- Results Count -->
+      <p class="text-muted mb-2">{{ total_doctors|intcomma }} doctors found</p>
+      <p class="text-xs text-slate-400 mb-6">Ranked by patient ratings, review count, and experience.</p>
+
+      <!-- Doctor Cards -->
+      <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 sm:gap-6">
+        {% for doctor in doctors %}
+        <div class="bg-card rounded-2xl overflow-hidden border border-border card-hover">
+          <div class="p-6">
+            <div class="flex gap-4">
+              <img loading="lazy" src="{{ doctor.get_profile_picture_url }}" alt="{{ doctor.name }}" class="w-20 h-20 rounded-xl object-cover flex-shrink-0">
+              <div class="flex-1 min-w-0">
+                <div class="flex items-start justify-between gap-2">
+                  <h2 class="font-display font-semibold text-lg text-fg truncate">{{ doctor.name }}</h2>
+                  <span class="flex-shrink-0 w-2 h-2 rounded-full bg-green-500 mt-2"></span>
+                </div>
+                <p class="text-sm text-gray-500">{{ doctor.designation }}</p>
+                <p class="text-accent font-medium text-sm">
+                  {% for spec in doctor.specialties.all %}{{ spec.name }}{% if not forloop.last %}, {% endif %}{% endfor %}
+                </p>
+                <p class="text-muted text-sm mt-1 truncate">
+                  {% if doctor.hospital %}{{ doctor.hospital.name }}{% endif %}
+                </p>
+                <div class="flex items-center gap-1 mt-2">
+                  <svg class="w-4 h-4 rating-star" fill="currentColor" viewBox="0 0 20 20"><path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"/></svg>
+                  <span class="text-sm font-medium text-fg">{{ doctor.avg_rating|floatformat:1|default:"N/A" }}</span>
+                  <span class="text-sm text-muted">({{ doctor.review_count }} reviews)</span>
+                </div>
+              </div>
+            </div>
+            <div class="flex items-center justify-between mt-6 pt-4 border-t border-border">
+              <div><p class="text-xs text-muted">Experience</p><p class="font-semibold text-fg">{{ doctor.experience_years|default:"N/A" }} years</p></div>
+              <div class="text-right"><p class="text-xs text-muted">Location</p><p class="font-semibold text-accent">{{ doctor.location.name|default:"N/A" }}</p></div>
+            </div>
+            <a href="{% url 'doctor_profile' doctor.slug %}" aria-label="View details for {{ doctor.name }}" class="w-full mt-4 py-3 bg-gradient-to-r from-slate-900 to-slate-700 text-white font-bold rounded-xl border-2 border-slate-600 hover:from-slate-800 hover:to-slate-600 hover:border-slate-500 transition-all shadow-lg shadow-slate-900/20 flex items-center justify-center gap-2">
+              <i class="fas fa-eye"></i> View Details
+            </a>
+          </div>
+        </div>
+        {% empty %}
+        <div class="col-span-full text-center py-16">
+          <p class="text-muted text-lg">No doctors found matching your criteria.</p>
+          <a href="{% url 'doctor_list' %}" class="mt-4 inline-block text-accent font-medium hover:underline">Browse all doctors</a>
+        </div>
+        {% endfor %}
+      </div>
+
+      <!-- Pagination -->
+      {% if page_obj.has_other_pages %}
+      <div class="flex items-center justify-center gap-1 sm:gap-1 mt-10 sm:mt-12 flex-wrap">
+        {% if page_obj.has_previous %}
+          <a href="?page={{ page_obj.previous_page_number }}{% if department_slug %}&specialty={{ department_slug }}{% endif %}{% if location_slug %}&location={{ location_slug }}{% endif %}{% if count %}&count={{ count }}{% endif %}" class="px-3 sm:px-4 py-2 border border-slate-300 rounded-lg hover:bg-accent hover:text-slate-900 hover:border-accent transition-colors text-slate-600 btn-touch text-sm">Prev</a>
+        {% else %}
+          <span class="px-3 sm:px-4 py-2 border border-slate-200 rounded-lg text-slate-300 cursor-not-allowed text-sm">Prev</span>
+        {% endif %}
+
+        {% for num in page_obj.paginator.page_range %}
+          {% if num == 1 or num == page_obj.paginator.num_pages or num >= page_obj.number|add:'-3' and num <= page_obj.number|add:'3' %}
+            {% if num == page_obj.number %}
+              <span class="px-3 sm:px-4 py-2 bg-accent text-white rounded-lg font-medium text-sm">{{ num }}</span>
+            {% else %}
+              <a href="?page={{ num }}{% if department_slug %}&specialty={{ department_slug }}{% endif %}{% if location_slug %}&location={{ location_slug }}{% endif %}{% if count %}&count={{ count }}{% endif %}" class="px-3 sm:px-4 py-2 border border-slate-300 rounded-lg hover:bg-accent hover:text-slate-900 hover:border-accent transition-colors text-slate-600 btn-touch text-sm">{{ num }}</a>
+            {% endif %}
+          {% elif num == page_obj.number|add:'-4' or num == page_obj.number|add:'4' %}
+            <span class="px-1 sm:px-2 py-2 text-slate-400 text-sm">...</span>
+          {% endif %}
+        {% endfor %}
+
+        {% if page_obj.has_next %}
+          <a href="?page={{ page_obj.next_page_number }}{% if department_slug %}&specialty={{ department_slug }}{% endif %}{% if location_slug %}&location={{ location_slug }}{% endif %}{% if count %}&count={{ count }}{% endif %}" class="px-3 sm:px-4 py-2 border border-slate-300 rounded-lg hover:bg-accent hover:text-slate-900 hover:border-accent transition-colors text-slate-600 btn-touch text-sm">Next</a>
+        {% else %}
+          <span class="px-3 sm:px-4 py-2 border border-slate-200 rounded-lg text-slate-300 cursor-not-allowed text-sm">Next</span>
+        {% endif %}
+      </div>
+      {% endif %}
+    </div>
+  </section>
+
+  <!-- Related -->
+  <section class="py-10 bg-slate-50 border-t border-border">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
+      <div class="flex flex-wrap justify-center gap-3">
+        {% if location_slug and not is_country_wide %}
+        <a href="{% url 'top_hospitals_location' location=location_slug %}" class="px-5 py-2.5 bg-gradient-to-r from-accent to-cyan-600 text-white font-semibold rounded-lg hover:from-cyan-600 hover:to-accent transition-all text-sm">
+          Top Hospitals in {{ location_display }}
+        </a>
+        {% endif %}
+        <a href="{% url 'hospital_list' %}" class="px-5 py-2.5 border border-slate-300 text-slate-700 font-semibold rounded-lg hover:bg-gray-50 transition-all text-sm">All Hospitals</a>
+        <a href="{% url 'doctor_list' %}" class="px-5 py-2.5 border border-slate-300 text-slate-700 font-semibold rounded-lg hover:bg-gray-50 transition-all text-sm">Browse Doctors</a>
+      </div>
+    </div>
+  </section>
+</main>
+{% endblock content %}

@@ -1,0 +1,205 @@
+{% extends "base_new.html" %}
+{% load static %}
+
+{% block seo_head %}
+<title>Privacy Policy — BdDoc24</title>
+<meta name='robots' content='index, follow, max-image-preview:large, max-snippet:-1, max-video-preview:-1' />
+<meta name="description" content="Read the Privacy Policy of BdDoc24. Learn how we handle data, cookies, and third-party services like Google Analytics, AdSense, and Ezoic on our platform." />
+
+<meta property="og:title" content="Privacy Policy — BdDoc24" />
+<meta property="og:description" content="Read the Privacy Policy of BdDoc24. Learn how we handle data, cookies, and third-party services on our platform." />
+<meta property="og:url" content="https://bddoc24.com/privacy/" />
+<meta property="og:type" content="website" />
+<meta property="og:image" content="https://bddoc24.com{% static 'images/bddoc24-og-image.jpg' %}" />
+<meta property="og:image:width" content="1200" />
+<meta property="og:image:height" content="630" />
+<meta property="og:image:alt" content="Privacy Policy — BdDoc24" />
+<meta property="og:image:type" content="image/jpg" />
+
+<meta name="twitter:title" content="Privacy Policy — BdDoc24" />
+<meta name="twitter:description" content="Read the Privacy Policy of BdDoc24. Learn how we handle data and cookies on our platform." />
+<meta name="twitter:image" content="https://bddoc24.com{% static 'images/bddoc24-og-image.jpg' %}" />
+<link rel="canonical" href="https://bddoc24.com/privacy/" />
+
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@graph": [
+    {
+      "@type": "Organization",
+      "@id": "https://bddoc24.com/#organization",
+      "name": "BdDoc24",
+      "url": "{{ request.scheme }}://{{ request.get_host }}/",
+      "description": "BdDoc24 is a doctor directory platform in Bangladesh helping users find healthcare professionals.",
+      "logo": {
+        "@type": "ImageObject",
+        "url": "{{ request.scheme }}://{{ request.get_host }}{% static 'images/logo.png' %}"
+      },
+      "address": {
+        "@type": "PostalAddress",
+        "addressCountry": "BD"
+      },
+      "contactPoint": {
+        "@type": "ContactPoint",
+        "contactType": "customer support",
+        "areaServed": "BD",
+        "availableLanguage": ["English", "Bengali"]
+      }
+    },
+
+    {
+      "@type": "WebSite",
+      "@id": "{{ request.scheme }}://{{ request.get_host }}/#website",
+      "url": "{{ request.scheme }}://{{ request.get_host }}/",
+      "name": "BdDoc24 - Doctor Directory Bangladesh",
+      "publisher": {
+        "@id": "{{ request.scheme }}://{{ request.get_host }}/#organization"
+      },
+      "inLanguage": "en"
+    },
+
+    {
+      "@type": "WebPage",
+      "@id": "{{ request.build_absolute_uri }}#webpage",
+      "url": "{{ request.build_absolute_uri }}",
+      "name": "Privacy Policy",
+      "description": "Details about how BdDoc24 handles privacy, cookies, and third-party services like Google Analytics, AdSense, and Ezoic.",
+      "isPartOf": {
+        "@id": "{{ request.scheme }}://{{ request.get_host }}/#website"
+      },
+      "about": {
+        "@id": "{{ request.scheme }}://{{ request.get_host }}/#organization"
+      },
+      "inLanguage": "en"
+    },
+
+    {
+      "@type": "BreadcrumbList",
+      "@id": "{{ request.build_absolute_uri }}#breadcrumb",
+      "itemListElement": [
+        {
+          "@type": "ListItem",
+          "position": 1,
+          "name": "Home",
+          "item": "{{ request.scheme }}://{{ request.get_host }}/"
+        },
+        {
+          "@type": "ListItem",
+          "position": 2,
+          "name": "Privacy Policy",
+          "item": "{{ request.build_absolute_uri }}"
+        }
+      ]
+    }
+
+  ]
+}
+</script>
+
+{% endblock %}
+
+{% block content %}
+<main class="flex-grow pt-16">
+    
+    <!-- Hero Section -->
+    <section class="bg-white pt-20 pb-12 lg:pt-24 lg:pb-16 border-b border-border">
+      <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
+        <div class="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-blue-100 text-blue-800 text-sm font-semibold mb-4">
+          <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z"/></svg>
+          Legal & Privacy
+        </div>
+        <h1 class="font-display font-bold text-4xl sm:text-5xl text-slate-900 leading-tight mb-4">
+          Privacy Policy
+        </h1>
+        <p class="text-lg text-slate-600 max-w-2xl mx-auto">
+          BdDoc24 respects your privacy. This policy explains what data we collect, how it is used, and how third-party services may process information.
+        </p>
+      </div>
+    </section>
+
+    <!-- Policy Content -->
+    <section class="py-16 bg-bg">
+      <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
+        
+        <div class="bg-white rounded-2xl p-8 sm:p-10 shadow-sm border border-border space-y-12">
+          
+          <!-- Section 1 -->
+          <div>
+            <h2 class="font-display font-bold text-2xl text-fg mb-4">1. Introduction</h2>
+            <p class="text-muted leading-relaxed">
+              BdDoc24 is a doctor directory platform that helps users find healthcare professionals across Bangladesh.
+              We do not require user registration and do not collect personal or medical information directly.
+            </p>
+          </div>
+
+          <!-- Section 2 -->
+          <div>
+            <h2 class="font-display font-bold text-2xl text-fg mb-4">2. Information We Do Not Collect</h2>
+            <p class="text-muted leading-relaxed">
+              BdDoc24 does not collect or store:
+            </p>
+            <ul class="mt-4 space-y-2 text-muted">
+              <li>• Personal identification information (name, phone, email)</li>
+              <li>• Medical or health-related data</li>
+              <li>• User accounts or login details</li>
+            </ul>
+          </div>
+
+          <!-- Section 3 -->
+          <div>
+            <h2 class="font-display font-bold text-2xl text-fg mb-4">3. Third-Party Services</h2>
+            <p class="text-muted leading-relaxed mb-4">
+              We use trusted third-party services that may collect and process data automatically:
+            </p>
+            <ul class="space-y-3 text-muted">
+              <li><strong>Google Analytics:</strong> Tracks website usage and visitor behavior.</li>
+              <li><strong>Google Search Console:</strong> Helps monitor website performance in search results.</li>
+              <li><strong>Google AdSense:</strong> Displays advertisements and may use cookies for personalized ads.</li>
+              <li><strong>Ezoic:</strong> Optimizes ads and user experience, and may collect usage data.</li>
+            </ul>
+            <p class="text-muted mt-4">
+              These services may use cookies, IP addresses, and device information according to their own privacy policies.
+            </p>
+          </div>
+
+          <!-- Section 4 -->
+          <div>
+            <h2 class="font-display font-bold text-2xl text-fg mb-4">4. Cookies & Tracking</h2>
+            <p class="text-muted leading-relaxed">
+              Third-party services may use cookies and similar technologies to enhance user experience, analyze traffic, and serve advertisements.
+              You can control cookies through your browser settings.
+            </p>
+          </div>
+
+          <!-- Section 5 -->
+          <div>
+            <h2 class="font-display font-bold text-2xl text-fg mb-4">5. Data Responsibility</h2>
+            <p class="text-muted leading-relaxed">
+              BdDoc24 does not directly collect user data. However, third-party providers may collect information independently.
+              We encourage users to review the privacy policies of these services for more details.
+            </p>
+          </div>
+
+          <!-- Section 6 -->
+          <div class="border-t border-border pt-8 text-center">
+            <h3 class="font-semibold text-fg text-lg">Questions?</h3>
+            <p class="text-muted text-sm mt-1 mb-4">
+              If you have any questions about this Privacy Policy, please contact us.
+            </p>
+            <a href="{% url 'contact_us' %}" class="inline-block px-8 py-3 bg-primary text-white font-semibold rounded-lg hover:bg-primary-600 transition-colors shadow-md text-sm">
+              Contact Us
+            </a>
+          </div>
+
+          <!-- Last Updated -->
+          <div class="text-center text-muted text-xs border-t border-border pt-6">
+            <p>Effective Date: April 1, 2026</p>
+            <p>Last Updated: April 1, 2026</p>
+          </div>
+
+        </div>
+      </div>
+    </section>
+
+</main>
+{% endblock %}

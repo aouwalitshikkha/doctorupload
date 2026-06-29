@@ -1,0 +1,285 @@
+{% extends "base_new.html" %}
+{% load static %}
+
+{% block seo_head %}
+<title>Terms of Service — BdDoc24</title>
+<meta name='robots' content='index, follow, max-image-preview:large, max-snippet:-1, max-video-preview:-1' />
+<meta name="description" content="Read the Terms of Service of BdDoc24. Learn about our platform usage policies, user responsibilities, and disclaimers." />
+
+<meta property="og:title" content="Terms of Service — BdDoc24" />
+<meta property="og:description" content="Read the Terms of Service of BdDoc24. Learn about our platform usage policies and user responsibilities." />
+<meta property="og:url" content="https://bddoc24.com/terms-of-service/" />
+<meta property="og:type" content="website" />
+<meta property="og:image" content="https://bddoc24.com{% static 'images/bddoc24-og-image.jpg' %}" />
+<meta property="og:image:width" content="1200" />
+<meta property="og:image:height" content="630" />
+<meta property="og:image:alt" content="Terms of Service — BdDoc24" />
+<meta property="og:image:type" content="image/jpg" />
+
+<meta name="twitter:title" content="Terms of Service — BdDoc24" />
+<meta name="twitter:description" content="Read the Terms of Service of BdDoc24. Learn about our platform usage policies." />
+<meta name="twitter:image" content="https://bddoc24.com{% static 'images/bddoc24-og-image.jpg' %}" />
+<link rel="canonical" href="https://bddoc24.com/terms-of-service/" />
+
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@graph": [
+
+    {
+      "@type": "Organization",
+      "@id": "{{ request.scheme }}://{{ request.get_host }}/#organization",
+      "name": "BdDoc24",
+      "url": "{{ request.scheme }}://{{ request.get_host }}/",
+      "description": "BdDoc24 is a doctor directory platform in Bangladesh helping users find healthcare professionals.",
+      "logo": {
+        "@type": "ImageObject",
+        "url": "{{ request.scheme }}://{{ request.get_host }}{% static 'images/logo.png' %}"
+      },
+      "address": {
+        "@type": "PostalAddress",
+        "addressCountry": "BD"
+      },
+      "contactPoint": {
+        "@type": "ContactPoint",
+        "contactType": "customer support",
+        "areaServed": "BD",
+        "availableLanguage": ["English", "Bengali"]
+      }
+    },
+
+    {
+      "@type": "WebSite",
+      "@id": "{{ request.scheme }}://{{ request.get_host }}/#website",
+      "url": "{{ request.scheme }}://{{ request.get_host }}/",
+      "name": "BdDoc24 - Doctor Directory Bangladesh",
+      "publisher": {
+        "@id": "{{ request.scheme }}://{{ request.get_host }}/#organization"
+      },
+      "inLanguage": "en"
+    },
+
+    {
+      "@type": "WebPage",
+      "@id": "{{ request.build_absolute_uri }}#webpage",
+      "url": "{{ request.build_absolute_uri }}",
+      "name": "Terms of Service",
+      "description": "Terms and conditions for using BdDoc24's doctor directory platform in Bangladesh.",
+      "isPartOf": {
+        "@id": "{{ request.scheme }}://{{ request.get_host }}/#website"
+      },
+      "about": {
+        "@id": "{{ request.scheme }}://{{ request.get_host }}/#organization"
+      },
+      "inLanguage": "en"
+    },
+
+    {
+      "@type": "BreadcrumbList",
+      "@id": "{{ request.build_absolute_uri }}#breadcrumb",
+      "itemListElement": [
+        {
+          "@type": "ListItem",
+          "position": 1,
+          "name": "Home",
+          "item": "{{ request.scheme }}://{{ request.get_host }}/"
+        },
+        {
+          "@type": "ListItem",
+          "position": 2,
+          "name": "Terms of Service",
+          "item": "{{ request.build_absolute_uri }}"
+        }
+      ]
+    }
+
+  ]
+}
+</script>
+
+{% endblock %}
+
+{% block content %}
+<main class="flex-grow pt-16">
+    
+    <!-- Hero Section -->
+    <section class="bg-white pt-20 pb-12 lg:pt-24 lg:pb-16 border-b border-border">
+      <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
+        <div class="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-amber-100 text-amber-800 text-sm font-semibold mb-4">
+          <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"/></svg>
+          Terms & Conditions
+        </div>
+        <h1 class="font-display font-bold text-4xl sm:text-5xl text-slate-900 leading-tight mb-4">
+          Terms of Service
+        </h1>
+        <p class="text-lg text-slate-600 max-w-2xl mx-auto">
+          Welcome to BdDoc24. By accessing and using our platform, you agree to be bound by these terms and conditions.
+        </p>
+      </div>
+    </section>
+
+    <!-- Policy Content -->
+    <section class="py-16 bg-bg">
+      <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
+        
+        <div class="bg-white rounded-2xl p-8 sm:p-10 shadow-sm border border-border space-y-10">
+          
+          <!-- Section 1 -->
+          <div>
+            <h2 class="font-display font-bold text-2xl text-fg mb-4">1. Introduction</h2>
+            <p class="text-muted leading-relaxed">
+              Welcome to BdDoc24 ("we," "our," or "us"). These Terms of Service ("Terms") govern your access to and use of the BdDoc24 website located at bddoc24.com and any related services (collectively, the "Platform").
+            </p>
+            <p class="text-muted leading-relaxed mt-4">
+              By accessing or using the Platform, you agree to be bound by these Terms. If you disagree with any part of these Terms, you may not access the Platform.
+            </p>
+          </div>
+
+          <!-- Section 2 -->
+          <div>
+            <h2 class="font-display font-bold text-2xl text-fg mb-4">2. Nature of Our Service</h2>
+            <p class="text-muted leading-relaxed">
+              BdDoc24 is a doctor directory platform that provides information about healthcare professionals in Bangladesh. We help patients find and connect with doctors based on specialization, location, and availability.
+            </p>
+            <div class="mt-4 grid grid-cols-1 md:grid-cols-2 gap-4">
+              <div class="p-4 bg-slate-50 rounded-lg border border-border">
+                <div class="flex items-center gap-3 mb-2">
+                  <div class="w-8 h-8 rounded-full bg-emerald-100 flex items-center justify-center">
+                    <svg class="w-4 h-4 text-emerald-600" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"/></svg>
+                  </div>
+                  <span class="font-semibold text-fg">What We Do</span>
+                </div>
+                <p class="text-sm text-muted">List verified doctor profiles with qualifications, specialties, chamber details, and contact information.</p>
+              </div>
+              <div class="p-4 bg-slate-50 rounded-lg border border-border">
+                <div class="flex items-center gap-3 mb-2">
+                  <div class="w-8 h-8 rounded-full bg-red-100 flex items-center justify-center">
+                    <svg class="w-4 h-4 text-red-600" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"/></svg>
+                  </div>
+                  <span class="font-semibold text-fg">What We Don't Do</span>
+                </div>
+                <p class="text-sm text-muted">We do not provide medical advice, diagnosis, or treatment recommendations.</p>
+              </div>
+            </div>
+          </div>
+
+          <!-- Section 3 -->
+          <div>
+            <h2 class="font-display font-bold text-2xl text-fg mb-4">3. User Responsibilities</h2>
+            <p class="text-muted leading-relaxed mb-4">
+              By using BdDoc24, you agree to:
+            </p>
+            <ul class="space-y-3 text-muted">
+              <li class="flex items-start gap-3">
+                <svg class="w-5 h-5 text-emerald-500 mt-0.5 shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"/></svg>
+                <span>Use the Platform only for lawful purposes and in accordance with these Terms</span>
+              </li>
+              <li class="flex items-start gap-3">
+                <svg class="w-5 h-5 text-emerald-500 mt-0.5 shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"/></svg>
+                <span>Not attempt to interfere with the proper working of the Platform</span>
+              </li>
+              <li class="flex items-start gap-3">
+                <svg class="w-5 h-5 text-emerald-500 mt-0.5 shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"/></svg>
+                <span>Not use any automated means to access or collect information from the Platform</span>
+              </li>
+              <li class="flex items-start gap-3">
+                <svg class="w-5 h-5 text-emerald-500 mt-0.5 shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"/></svg>
+                <span>Respect the privacy and rights of healthcare professionals listed on our Platform</span>
+              </li>
+              <li class="flex items-start gap-3">
+                <svg class="w-5 h-5 text-emerald-500 mt-0.5 shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"/></svg>
+                <span>Verify information independently before making any healthcare decisions</span>
+              </li>
+            </ul>
+          </div>
+
+          <!-- Section 4 -->
+          <div>
+            <h2 class="font-display font-bold text-2xl text-fg mb-4">4. Intellectual Property</h2>
+            <p class="text-muted leading-relaxed">
+              The Platform and its original content, features, and functionality are owned by BdDoc24 and are protected by copyright, trademark, and other intellectual property laws. You may not reproduce, distribute, modify, or create derivative works from any content on this Platform without our prior written consent.
+            </p>
+          </div>
+
+          <!-- Section 5 -->
+          <div>
+            <h2 class="font-display font-bold text-2xl text-fg mb-4">5. Third-Party Links & Services</h2>
+            <p class="text-muted leading-relaxed mb-4">
+              Our Platform may contain links to third-party websites or services that are not owned or controlled by BdDoc24. We have no control over, and assume no responsibility for, the content, privacy policies, or practices of any third-party websites or services.
+            </p>
+            <p class="text-muted leading-relaxed">
+              The Platform may also include advertisements and content from third-party providers such as Google AdSense and Ezoic, which may use cookies and similar technologies to serve ads based on your interests.
+            </p>
+          </div>
+
+          <!-- Section 6 -->
+          <div>
+            <h2 class="font-display font-bold text-2xl text-fg mb-4">6. Disclaimer & Limitation of Liability</h2>
+            <div class="bg-amber-50 border border-amber-200 rounded-lg p-5">
+              <div class="flex items-start gap-3">
+                <svg class="w-6 h-6 text-amber-600 mt-0.5 shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z"/></svg>
+                <div>
+                  <h3 class="font-semibold text-amber-800 mb-2">Important Notice</h3>
+                  <p class="text-sm text-amber-700 leading-relaxed">
+                    BdDoc24 is a directory platform only. We do not provide medical advice, diagnosis, or treatment. Always consult with a qualified healthcare professional for medical concerns. The information on this Platform is for informational purposes only and should not be considered as medical advice.
+                  </p>
+                </div>
+              </div>
+            </div>
+            <p class="text-muted leading-relaxed mt-4">
+              BdDoc24 shall not be liable for any errors, omissions, or for any damages arising from the use of or reliance on any information provided on this Platform. Users are encouraged to verify information independently before making any healthcare decisions.
+            </p>
+          </div>
+
+          <!-- Section 7 -->
+          <div>
+            <h2 class="font-display font-bold text-2xl text-fg mb-4">7. Healthcare Professional Information</h2>
+            <p class="text-muted leading-relaxed">
+              Doctor profiles on BdDoc24 are submitted by healthcare professionals or collected from publicly available sources. While we strive to maintain accurate and up-to-date information, we cannot guarantee the completeness or accuracy of all listings. We recommend verifying doctor credentials, qualifications, and availability directly with the healthcare provider before visiting.
+            </p>
+          </div>
+
+          <!-- Section 8 -->
+          <div>
+            <h2 class="font-display font-bold text-2xl text-fg mb-4">8. Governing Law</h2>
+            <p class="text-muted leading-relaxed">
+              These Terms shall be governed by and construed in accordance with the laws of Bangladesh, without regard to its conflict of law provisions. Any disputes arising under these Terms shall be subject to the exclusive jurisdiction of the courts of Bangladesh.
+            </p>
+          </div>
+
+          <!-- Section 9 -->
+          <div>
+            <h2 class="font-display font-bold text-2xl text-fg mb-4">9. Changes to These Terms</h2>
+            <p class="text-muted leading-relaxed">
+              We reserve the right, at our sole discretion, to modify or replace these Terms at any time. If a revision is material, we will try to provide at least 30 days' notice prior to any new terms taking effect. What constitutes a material change will be determined at our sole discretion.
+            </p>
+          </div>
+
+          <!-- Section 10 -->
+          <div class="border-t border-border pt-8">
+            <h2 class="font-display font-bold text-2xl text-fg mb-4">10. Contact Us</h2>
+            <p class="text-muted leading-relaxed mb-6">
+              If you have any questions about these Terms of Service, please contact us.
+            </p>
+            <div class="flex flex-col sm:flex-row gap-4">
+              <a href="{% url 'contact_us' %}" class="inline-block px-8 py-3 bg-primary text-white font-semibold rounded-lg hover:bg-primary-600 transition-colors shadow-md text-sm">
+                Contact Us
+              </a>
+              <a href="{% url 'privacy_policy' %}" class="inline-block px-8 py-3 bg-white text-fg border border-border font-semibold rounded-lg hover:bg-slate-50 transition-colors text-sm">
+                View Privacy Policy
+              </a>
+            </div>
+          </div>
+
+          <!-- Last Updated -->
+          <div class="text-center text-muted text-xs border-t border-border pt-6">
+            <p>Effective Date: April 1, 2026</p>
+            <p>Last Updated: April 1, 2026</p>
+          </div>
+
+        </div>
+      </div>
+    </section>
+
+</main>
+{% endblock %}
